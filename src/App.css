@@ -16,9 +16,10 @@ html {
 .hidden {
   display: none;
 }
-input:focus {
+input:focus,
+input {
   outline: none;
-  color: rgba(217, 217, 217, 0.3);  
+  color: rgba(217, 217, 217, 0.3);
 }
 .container {
   background-color: black;
@@ -72,27 +73,20 @@ input:focus {
   background-color: #1f1f1f;
   border-radius: 5px;
 }
-.navbar button {
+.navbar .navbar-button {
   width: 100%;
-  color: #141414;
-  background-color: #f33f3f;
-  border-radius: 5px;
-  /* height: 35px; */
   padding: 10px 0 10px 10px;
-  border: none;
   margin-bottom: 15px;
-  cursor: pointer;
 }
 .navbar p {
   color: #9a9a9a;
   font-size: 15px;
 }
-.navbar .watchList{
+.navbar .watchList {
   overflow-y: auto;
   height: 35%;
 }
-.navbar .watchList-item{
-  
+.navbar .watchList-item {
   gap: 5px;
   padding: 5px;
   align-items: center;
@@ -121,8 +115,9 @@ input:focus {
   padding: 4% 4%;
   overflow-y: scroll;
   /* flex-grow: 1; */
-  color: #E1E1E1;
+  color: #e1e1e1;
   width: 80%;
+  position: relative;
 }
 .main .welcome {
   background-color: rgba(217, 217, 217, 0.1);
@@ -143,7 +138,7 @@ input:focus {
   margin-bottom: 20px;
 }
 .searchbar {
-  margin: 30px 0 ; 
+  margin: 30px 0;
   width: 100%;
   position: relative;
   color: rgba(217, 217, 217, 0.3);
@@ -173,42 +168,115 @@ input:focus {
   border-radius: 0 5px 5px 0;
 }
 
-.movies{
-    gap: 50px;
-    width: 100%;
-    overflow-x: auto;
+.movies {
+  flex-wrap: wrap;
+  gap: 50px;
+  width: 100%;
+  overflow-x: auto;
 }
 
-.movie-list .title{
-    font-size: 25px;
-    margin-bottom: 30px;
+.movie-list .title {
+  font-size: 25px;
+  margin-bottom: 30px;
 }
-.movie-list li{
-    list-style: none;
-    flex-direction: column;
-    flex-grow: 1;
+.movie-list li {
+  list-style: none;
+  flex-direction: column;
+  /* flex-grow: 1; */
 }
-.movie-list .movie{
-    width: 150px;
-    background-color: #1F1F1F;
+.movie-list .movie {
+  width: 150px;
+  background-color: #1f1f1f;
 }
-.movie{
-    font-size: 16px;
-    gap: 10px;
-    /* padding: 10px; */
-    position: relative;
+.movie {
+  font-size: 16px;
+  gap: 10px;
+  
+  /* padding: 10px; */
+  position: relative;
 }
-.movie svg{
-    position: absolute;
-    top: 2px;
-    left: 2px;
+.movie svg {
+  position: absolute;
+  top: 2px;
+  left: 2px;
 }
-.movie-details{
-    padding: 10px;
+.movie-details {
+  padding: 10px;
 }
-.movie .movie-rating{
-    text-align: right;
-    margin-bottom: 10px;
+.movie .movie-rating {
+  text-align: right;
+  margin-bottom: 10px;
 }
 
 /* main end */
+/* create watchlist page */
+.create-watchlist {
+  flex-direction: column;
+}
+.create-watchlist p {
+  font-size: 25px;
+  margin-bottom: 3%;
+}
+.create-watchlist label {
+  font-size: 16px;
+}
+.create-watchlist input,
+.user-login input {
+  background-color: transparent;
+  border: #e1e1e1 1px solid;
+  outline: none;
+  border-radius: 2px;
+  padding: 1%;
+  /* height: 20%; */
+  margin-bottom: 3%;
+  color: rgba(217, 217, 217, 0.3);
+}
+.create-watchlist input.description {
+  padding: 0.7% 0 10% 0.7%;
+  /* height: 100px; */
+}
+
+.create-watchlist button {
+  width: 20%;
+  padding: 10px 0 10px 10px;
+}
+
+/* create watchlist page end */
+/* Login page */
+.login-heading p {
+  color: #e1e1e1;
+  font-size: 27px;
+}
+.login-container {
+  position: relative;
+  width: 100%;
+  /* border: 1px solid red; */
+  height: 100%;
+}
+.user-login {
+  flex-direction: column;
+  gap: 5px;
+  /* align-content: center; */
+  justify-content: center;
+
+  margin: 5% auto;
+  width: fit-content;
+  height: fit-content;
+}
+.user-login input {
+  width: 250px;
+  border-bottom: 1%;
+}
+.user-login button {
+  /* justify-content: center; */
+  width: 200px;
+  padding: 7px 7px 7px 7px;
+  margin: 10px 0 0 20px;
+}
+.user-login p {
+  margin: 10px 0 0 40px;
+}
+.user-login a{
+  color: #f33f3f;
+}
+/* Login page end*/

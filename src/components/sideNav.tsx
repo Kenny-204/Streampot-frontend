@@ -1,24 +1,33 @@
-const WatchList = [
-  {
-    image: "32.webp",
-    title: "Movies by Tom Cruise",
-  },
-  {
-    image: "32.webp",
-    title: "Movies by Tom Cruise",
-  },
-  {
-    image: "32.webp",
-    title: "Movies by Tom Cruise",
-  },
-];
+import { Button } from "./Button";
 
-function SideNav() {
+// const WatchList = [
+//   {
+//     image: "32.webp",
+//     title: "Movies by Tom Cruise",
+//   },
+//   {
+//     image: "32.webp",
+//     title: "Movies by Tom Cruise",
+//   },
+//   {
+//     image: "32.webp",
+//     title: "Movies by Tom Cruise",
+//   },
+// ];
+
+interface watchListItem {
+  title: string;
+  image: string;
+}
+interface watchList {
+  watchList: watchListItem[];
+}
+function SideNav({ watchList }: watchList) {
   return (
     <nav className="navbar ">
       <ul className="nav-list">
         <li>
-          <h2 className="logo">Capstone</h2>
+          <h2 className="logo">StreamPot</h2>
         </li>
         <li>
           <input type="text" placeholder="Search" />
@@ -34,18 +43,19 @@ function SideNav() {
           </a>
         </li>
         <li>
-          <button>
-            <span className="fa fa-plus"></span> <b>Create WatchList</b>
-          </button>
+          <Button className="navbar-button">
+            <span className="fa fa-plus"></span> Create WatchList
+          </Button>
           <hr />
         </li>
         <li>
           <p>My Lists</p>
         </li>
       </ul>
-      <ul className="watchList" >
-        {WatchList.map((watchlistItem, i) => (
+      <ul className="watchList">
+        {watchList.map((watchlistItem, i: number) => (
           <WatchListItem
+            key={i}
             title={watchlistItem.title}
             image={watchlistItem.image}
           />
@@ -63,7 +73,7 @@ function SideNav() {
   );
 }
 
-function WatchListItem({ image, title }) {
+function WatchListItem({ image = "", title = "" }) {
   return (
     <li className="watchList-item flex">
       <img src={image} alt="profile pic" width="30px" />
