@@ -20,7 +20,7 @@ interface watchListItem {
   image: string;
 }
 interface watchList {
-  watchList: watchListItem[];
+  watchList: watchListItem[] | undefined;
 }
 function SideNav({ watchList }: watchList) {
   return (
@@ -53,7 +53,7 @@ function SideNav({ watchList }: watchList) {
         </li>
       </ul>
       <ul className="watchList">
-        {watchList.map((watchlistItem, i: number) => (
+        {watchList?.map((watchlistItem, i: number) => (
           <WatchListItem
             key={i}
             title={watchlistItem.title}
