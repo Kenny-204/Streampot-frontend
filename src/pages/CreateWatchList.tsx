@@ -1,5 +1,5 @@
 import { Button } from "../components/Button";
-import SideNav from "../components/sideNav";
+
 
 interface CreateWatchList {
   watchListName:string,

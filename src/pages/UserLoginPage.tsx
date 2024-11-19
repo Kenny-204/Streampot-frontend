@@ -1,4 +1,6 @@
-import { Button } from "./Button";
+import { Button } from "../components/Button";
+import {Link} from 'react-router-dom'
+
 
 function UserLoginPage() {
   return (
@@ -12,7 +14,7 @@ function UserLoginPage() {
           <input type="text" name="password" />
           <Button>Login</Button>
           <p>
-            or <a href="#">create an account</a>
+            or <Link to="/signup">create an account</Link>
           </p>
         </LoginForm>
       </div>

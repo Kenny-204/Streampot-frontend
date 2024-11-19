@@ -6,25 +6,25 @@ export const tempMovieData = [
     Poster: "movie1.webp",
   },
   {
-    imdbID: "tt0133093",
+    imdbID: "tt013s3093",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
   },
   {
-    imdbID: "tt1375666",
+    imdbID: "tt13756s66",
     Title: "Top Gun: Maverick",
     Year: "2022",
     Poster: "movie1.webp",
   },
   {
-    imdbID: "tt01330093",
+    imdbID: "tt0133s0093",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
   },
   {
-    imdbID: "tt6751668",
+    imdbID: "tt675166a8",
     Title: "Parasite",
     Year: "2019",
     Poster:
@@ -71,15 +71,11 @@ export const tempMovieData = [
   },
 ];
 
-function Main({children}) {
-  return (
-    <main className="main">
-      {children}
-    </main>
-  );
+function Main({ children }) {
+  return <main className="main">{children}</main>;
 }
-
 export function WelcomeSection() {
+
   return (
     <div className="welcome">
       <p className="title" role="heading" aria-level={1}>
@@ -93,16 +89,6 @@ export function WelcomeSection() {
         the poster to see more details or <span className="fa fa-check"></span>{" "}
         to mark the movie as watched.
       </p>
-    </div>
-  );
-}
-
-export function SearchBar() {
-  return (
-    <div className="searchbar">
-      <span className="fa fa-search"></span>
-      <input type="text" placeholder="Search for movie by title " />
-      <button>Search</button>
     </div>
   );
 }

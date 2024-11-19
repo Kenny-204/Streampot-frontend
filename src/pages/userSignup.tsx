@@ -1,5 +1,7 @@
-import { Button } from "./Button";
-import { LoginForm, LoginHeading } from "./UserLogin";
+import { Button } from "../components/Button";
+import { LoginForm, LoginHeading } from "./UserLoginPage";
+import {Link} from 'react-router-dom'
+
 
 function UserSignUp() {
   return (
@@ -16,7 +18,7 @@ function UserSignUp() {
         <input type="text" name="password" />
         <Button>Create Profile</Button>
         <p>
-          or <a href="#">Login</a>
+          or <Link to="/login">Login</Link>
         </p>
       </LoginForm>
     </>

@@ -1,4 +1,5 @@
 import { Button } from "./Button";
+import { Link } from "react-router-dom";
 
 // const WatchList = [
 //   {
@@ -29,21 +30,22 @@ function SideNav({ watchList }: watchList) {
         <li>
           <h2 className="logo">StreamPot</h2>
         </li>
+        
         <li>
           <input type="text" placeholder="Search" />
         </li>
         <li>
-          <a href="#" className="active">
+          <a href="/" className="active">
             <span className="fa fa-home-lg"> </span> Home
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="/history">
             <span className="fa fa-history"></span> History
           </a>
         </li>
         <li>
-          <Button className="navbar-button">
+          <Button className="navbar-button" href='createWatchlist' >
             <span className="fa fa-plus"></span> Create WatchList
           </Button>
           <hr />
@@ -65,7 +67,9 @@ function SideNav({ watchList }: watchList) {
           <div className="profile flex">
             <img src="32.webp" alt="profile pic" width="30px" />
             <p>GUEST</p>
-            <span className="fa fa-comment-dots"></span>
+            <a href="/signup" >
+              <span className="fa fa-comment-dots"></span>
+              </a>
           </div>
         </li>
       </ul>

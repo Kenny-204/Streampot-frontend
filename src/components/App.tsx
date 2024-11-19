@@ -1,35 +1,65 @@
-// import SideNav from "./sideNav";
-// import Main from "./Main";
-// import { WelcomeSection, SearchBar } from "./Main";
-// import { MovieList } from "./MovieList";
-
 import { FormEvent, useState } from "react";
-// import History from "./history";
-// import WatchListDetail from "./watchListDetails";
-// import UserSignUp from "./userSignup";
-// import EditWatchList from "./editWatchList";
 import HomePage from "../pages/homePage";
 import Layout from "../layout/layout";
 import CreateWatchList from "../pages/CreateWatchList";
-// import UserLoginPage from "./UserLogin";
-// import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import UserLoginPage from "../pages/UserLoginPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import EditWatchList from "../pages/editWatchList";
+import History from "../pages/history";
+import UserSignUp from "../pages/userSignup";
+import SearchResult from "../pages/searchResult";
+
 
 interface watchListItem {
   title: string;
   image: string;
 }
 
-// const router = createBrowserRouter([
-//   {
-//     path: "",
-//     element: <HomePage />,
-//   },
-// ]);
-
 function App() {
   const [watchList, setWatchList] = useState<watchListItem[]>([]);
   const [watchListName, setWatchlistName] = useState("");
   const [watchListDescription, setWatchlistDescription] = useState("");
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage />,
+      errorElement: <NotFoundPage />,
+    },
+    {
+      path: "/login",
+      element: <UserLoginPage />,
+    },
+    {
+      path: "/createWatchlist",
+      element: (
+        <CreateWatchList
+          watchListName={watchListName}
+          watchListDescription={watchListDescription}
+          setWatchlistName={setWatchlistName}
+          setWatchlistDescription={setWatchlistDescription}
+          onCreateWatchList={handleCreateWatchList}
+        />
+      ),
+    },
+    {
+      path: "/editwatchlist",
+      element: <EditWatchList />,
+    },
+    {
+      path: "/history",
+      element: <History />,
+    },
+    {
+      path: "/signup",
+      element: <UserSignUp />,
+    },
+    {
+      path: "/searchresults",
+      element: <SearchResult />,
+    },
+   
+  ]);
 
   function handleCreateWatchList(e: FormEvent<HTMLFormElement>) {
     // prevent page reload
@@ -48,38 +78,15 @@ function App() {
     // reset the form values
     setWatchlistName("");
     setWatchlistDescription("");
+
   }
 
   return (
     <>
       <div className="container flex">
         <Layout watchList={watchList}>
-          <HomePage/>
-          {/* <RouterProvider router={router} /> */}
-          {/* <CreateWatchList
-            watchListName={watchListName}
-            watchListDescription={watchListDescription}
-            setWatchlistName={setWatchlistName}
-            setWatchlistDescription={setWatchlistDescription}
-            onCreateWatchList={handleCreateWatchList}
-          /> */}
+          <RouterProvider router={router} />
         </Layout>
-
-        {/* <Main>
-          <UserLoginPage />
-        </Main> */}
-        {/* <Main>
-          <History />
-        </Main> */}
-        {/* <Main>
-          <WatchListDetail />
-        </Main> */}
-        {/* <Main>
-          <UserSignUp />
-        </Main> */}
-        {/* <Main>
-          <EditWatchList/>
-        </Main> */}
       </div>
     </>
   );

@@ -273,7 +273,7 @@ input {
   padding: 7px 7px 7px 7px;
 }
 .user-login p,
-.user-login button,
+.user-login a ,
 .user-login img {
   place-self: center;
 }

@@ -10,12 +10,15 @@ interface Button {
   className?: string;
   children: any;
   onClick?: any;
+  href?:any
 }
 
-export function Button({ children, className, onClick }: Button) {
+export function Button({ children, className, onClick,href }: Button) {
   return (
-    <button className={className} style={buttonStyle} onClick={onClick}>
+    <a href={href}>
+       <button className={className} style={buttonStyle} onClick={onClick}  >
       <b>{children}</b>
     </button>
+      </a>
   );
 }

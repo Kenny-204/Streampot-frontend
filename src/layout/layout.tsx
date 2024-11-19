@@ -1,6 +1,7 @@
 import Main from "../components/Main";
 import SideNav from "../components/sideNav";
 
+
 interface watchListItem {
   title: string;
   image: string;
