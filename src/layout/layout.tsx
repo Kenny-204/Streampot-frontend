@@ -1,7 +1,6 @@
 import Main from "../components/Main";
 import SideNav from "../components/sideNav";
 
-
 interface watchListItem {
   title: string;
   image: string;
@@ -14,8 +13,10 @@ interface Layout {
 function Layout({ children, watchList }: Layout) {
   return (
     <>
-      <SideNav watchList={watchList} />
-      <Main>{children}</Main>
+      <div className="container flex">
+        <SideNav watchList={watchList} />
+        <Main>{children}</Main>
+      </div>
     </>
   );
 }

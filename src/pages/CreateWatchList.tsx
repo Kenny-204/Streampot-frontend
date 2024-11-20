@@ -1,12 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
-
+import { FormEvent } from "react";
 
 interface CreateWatchList {
-  watchListName:string,
-  watchListDescription:string,
+  watchListName: string;
+  watchListDescription: string;
   setWatchlistDescription: Function;
   setWatchlistName: Function;
   onCreateWatchList: Function;
+  onSetCurrentWatchList: Function;
 }
 
 function CreateWatchList({
@@ -15,10 +17,17 @@ function CreateWatchList({
   setWatchlistDescription,
   setWatchlistName,
   onCreateWatchList,
+  onSetCurrentWatchList,
 }: CreateWatchList) {
+  const navigate = useNavigate();
+
+  function onButtonClick(e) {
+    e.preventDefault();
+    onCreateWatchList();
+    navigate("/watchlistdetail");
+  }
   return (
     <>
-    
       <form className="create-watchlist flex">
         <p role="heading" aria-level={1}>
           Create a new Watchlist
@@ -38,7 +47,14 @@ function CreateWatchList({
           onChange={(e) => setWatchlistDescription(e.target.value)}
           value={watchListDescription}
         />
-        <Button onClick={onCreateWatchList}>
+        <Button
+          onClick={(e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
+            onCreateWatchList();
+            onSetCurrentWatchList();
+            navigate("/watchlistdetail");
+          }}
+        >
           <span className="fa fa-plus"></span> Create WatchList
         </Button>
       </form>

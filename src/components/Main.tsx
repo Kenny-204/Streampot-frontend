@@ -24,46 +24,46 @@ export const tempMovieData = [
     Poster: "movie2.webp",
   },
   {
-    imdbID: "tt675166a8",
+    imdbID: "tt67l5166a8",
     Title: "Parasite",
     Year: "2019",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
   },
   {
-    imdbID: "tt01330093",
+    imdbID: "tt013n30093",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
   },
   {
-    imdbID: "tt6751668",
+    imdbID: "tt6751m668",
     Title: "Parasite",
     Year: "2019",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
   },
   {
-    imdbID: "tt01330093",
+    imdbID: "tt01330p093",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
   },
   {
-    imdbID: "tt6751668",
+    imdbID: "tt675166b8",
     Title: "Parasite",
     Year: "2019",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
   },
   {
-    imdbID: "tt01330093",
+    imdbID: "tt0133009v3",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
   },
   {
-    imdbID: "tt6751668",
+    imdbID: "tt67516g68",
     Title: "Parasite",
     Year: "2019",
     Poster:

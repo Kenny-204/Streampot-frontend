@@ -28,6 +28,23 @@ input {
 }
 
 /* Navbar */
+/* this part is to reset the navlink styles */
+
+.navbar .profile .profile-link {
+  display: inline;
+  width: auto;
+  padding: 0;
+}
+.navbar .no-navlink{
+  display: block;
+  padding: 0;
+  background-color: transparent;
+}
+
+.navbar .no-navlink.active {
+  background-color: transparent;
+}
+/* reset done */
 
 .navbar {
   /* flex-direction: column; */
@@ -107,7 +124,6 @@ input {
   position: absolute;
   right: 5px;
 }
-
 /* navbar end */
 /* main start */
 .main {
@@ -273,7 +289,7 @@ input {
   padding: 7px 7px 7px 7px;
 }
 .user-login p,
-.user-login a ,
+.user-login a,
 .user-login img {
   place-self: center;
 }

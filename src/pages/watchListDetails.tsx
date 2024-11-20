@@ -1,17 +1,17 @@
 import { MovieList } from "../components/MovieList";
 
-function WatchListDetail() {
+function WatchListDetail({currentWatchlist}) {
   return (
     <section className="watchlist-detail">
-      <p className="header">Movies by Tom Cruise</p>
+      <p className="header">{currentWatchlist.title}</p>
       <p>About this watchlist</p>
       <p className="list-description">
-        This list lorem ipsum dolor et blah blah blah
+        {currentWatchlist.description}
       </p>
 
       <MovieList>
         <div className="list-details flex">
-          <DetailBox title="ITEMS ON LIST" metric="10" />
+          <DetailBox title="ITEMS ON LIST" metric={currentWatchlist.items?.length || 0} />
           <DetailBox title="UNWATCHED RUNTIME" metric="14h 30m" />
           <DetailBox title="AVERAGE SCORE" metric="73" />
         </div>
