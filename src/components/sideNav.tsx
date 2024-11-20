@@ -1,20 +1,6 @@
 import { Button } from "./Button";
 import { NavLink } from "react-router-dom";
-
-// const WatchList = [
-//   {
-//     image: "32.webp",
-//     title: "Movies by Tom Cruise",
-//   },
-//   {
-//     image: "32.webp",
-//     title: "Movies by Tom Cruise",
-//   },
-//   {
-//     image: "32.webp",
-//     title: "Movies by Tom Cruise",
-//   },
-// ];
+import { HouseIcon, HistoryIcon, PlusIcon, CommentIcon } from "./Icons";
 
 interface watchListItem {
   title: string;
@@ -36,18 +22,19 @@ function SideNav({ watchList }: watchList) {
         </li>
         <li>
           <NavLink to="/">
-            <span className="fa fa-home-lg"> </span> Home
+            {" "}
+            <HouseIcon /> Home
           </NavLink>
         </li>
         <li>
           <NavLink to="/history">
-            <span className="fa fa-history"></span> History
+            <HistoryIcon /> History
           </NavLink>
         </li>
         <li>
           <NavLink to="/createWatchlist" className="no-navlink">
             <Button className="navbar-button">
-              <span className="fa fa-plus"></span> Create WatchList
+              <PlusIcon /> Create WatchList
             </Button>
           </NavLink>
           <hr />
@@ -70,7 +57,7 @@ function SideNav({ watchList }: watchList) {
             <img src="32.webp" alt="profile pic" width="30px" />
             <p>GUEST</p>
             <NavLink to="/signup" className="no-navlink">
-              <span className="fa fa-comment-dots"></span>
+              <CommentIcon />
             </NavLink>
           </div>
         </li>

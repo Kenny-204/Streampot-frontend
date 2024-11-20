@@ -1,3 +1,5 @@
+import { BookMarkIcon, CheckIcon } from "./Icons";
+
 export const tempMovieData = [
   {
     imdbID: "tt13795666",
@@ -85,8 +87,8 @@ export function WelcomeSection() {
         Browse movies, add them to watchlists and share them with friends.
       </p>
       <p className="welcome-text">
-        Just click the <span className="fa fa-bookmark"></span> to add a movie,
-        the poster to see more details or <span className="fa fa-check"></span>{" "}
+        Just click the <BookMarkIcon/> to add a movie,
+        the poster to see more details or <CheckIcon/>{" "}
         to mark the movie as watched.
       </p>
     </div>

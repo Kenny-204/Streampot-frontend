@@ -6,6 +6,20 @@
   font-style: normal;
   /* overflow: hidden; Changed from 'none' to 'hidden' */
 }
+
+svg:not(:host).svg-inline--fa,
+svg:not(:root).svg-inline--fa {
+  overflow: visible;
+  box-sizing: content-box;
+}
+
+.svg-inline--fa {
+  display: var(--fa-display, inline-block);
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
 /* smooth scrolling */
 html {
   scroll-behavior: smooth;
@@ -35,7 +49,7 @@ input {
   width: auto;
   padding: 0;
 }
-.navbar .no-navlink{
+.navbar .no-navlink {
   display: block;
   padding: 0;
   background-color: transparent;
