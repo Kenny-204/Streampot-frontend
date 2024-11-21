@@ -1,3 +1,5 @@
+import { FormEvent, MouseEvent, MouseEventHandler, ReactNode } from "react";
+
 const buttonStyle = {
   color: "#141414",
   backgroundColor: "#f33f3f",
@@ -8,8 +10,8 @@ const buttonStyle = {
 
 interface Button {
   className?: string;
-  children: any;
-  onClick?: any;
+  children: ReactNode;
+  onClick?:  (e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => void;
   href?:any
 }
 

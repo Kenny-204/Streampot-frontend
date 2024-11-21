@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import HomePage from "../pages/homePage";
 import Layout from "../layout/layout";
 import CreateWatchList from "../pages/CreateWatchList";
@@ -8,7 +8,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import EditWatchList from "../pages/editWatchList";
 import History from "../pages/history";
 import UserSignUp from "../pages/userSignup";
-import SearchResult from "../pages/searchResult";
+
 import WatchListDetail from "../pages/watchListDetails";
 
 interface watchListItem {
@@ -16,18 +16,21 @@ interface watchListItem {
   image: string;
 }
 
+interface currentWatchList {
+  title: string;
+  description: string;
+  items: any[];
+}
+
 function App() {
   const [watchList, setWatchList] = useState<watchListItem[]>([]);
   const [watchListName, setWatchlistName] = useState("");
   const [watchListDescription, setWatchlistDescription] = useState("");
-  const [currentWatchList, setCurrentWatchList] = useState<typeof watchList>(
-    []
-  );
+  const [currentWatchList, setCurrentWatchList] = useState<
+    currentWatchList 
+  >(Object);
 
   function handleCreateWatchList() {
-    // if theres no name or description
-    if (!watchListName || !watchListDescription) return;
-
     // create a new list out of the inserted name and description
     const newList = {
       image: "32.webp",
@@ -93,10 +96,7 @@ function App() {
           path: "/signup",
           element: <UserSignUp />,
         },
-        {
-          path: "/searchresults",
-          element: <SearchResult />,
-        },
+
         {
           path: "/watchlistdetail",
           element: <WatchListDetail currentWatchlist={currentWatchList} />,

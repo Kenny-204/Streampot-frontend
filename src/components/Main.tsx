@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { BookMarkIcon, CheckIcon } from "./Icons";
 
 export const tempMovieData = [
@@ -73,11 +74,14 @@ export const tempMovieData = [
   },
 ];
 
-function Main({ children }) {
+interface Main {
+  children: ReactNode;
+}
+
+function Main({ children }: Main) {
   return <main className="main">{children}</main>;
 }
 export function WelcomeSection() {
-
   return (
     <div className="welcome">
       <p className="title" role="heading" aria-level={1}>
@@ -87,9 +91,8 @@ export function WelcomeSection() {
         Browse movies, add them to watchlists and share them with friends.
       </p>
       <p className="welcome-text">
-        Just click the <BookMarkIcon/> to add a movie,
-        the poster to see more details or <CheckIcon/>{" "}
-        to mark the movie as watched.
+        Just click the <BookMarkIcon /> to add a movie, the poster to see more
+        details or <CheckIcon /> to mark the movie as watched.
       </p>
     </div>
   );

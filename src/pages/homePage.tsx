@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Main, { WelcomeSection } from "../components/Main";
+import  { WelcomeSection } from "../components/Main";
 import { SearchBar } from "../components/SearchBar";
 import { MovieList } from "../components/MovieList";
-import SideNav from "../components/sideNav";
+
 
 // Define the movie interface
 interface Movie {
@@ -33,6 +33,7 @@ const options = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YjA0ODNiMjRkYjY1NjM0MDdlZDNmZGM2YTc5NzJlZiIsIm5iZiI6MTczMTk5ODAzNS4wMzcwMTEsInN1YiI6IjY3M2I4NzYzYTA5MWMwMGExNWE2ZmM4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5m-QqxGUuZUFIuKb0TQhY-O86izJZ-ZVmwBsVkTNTs4",
   },
 };
+
 function HomePage() {
   // Correct the type of state
   const [popularMoviesList, setPopularMoviesList] = useState<PopularMovie[]>(
@@ -69,18 +70,16 @@ function HomePage() {
     <>
       <WelcomeSection />
       <SearchBar setQueriedMovies={setQueriedMovies} />
-      {/* <PopularMovies popularMoviesList={ popularMoviesList} /> */}
-      {queriedMovies.length == 0 ? (
+      {queriedMovies.length === 0 ? (
         <PopularMovies popularMoviesList={popularMoviesList} />
       ) : (
         <SearchResult queriedMovies={queriedMovies} />
       )}
-    
     </>
   );
 }
 
-function PopularMovies({ popularMoviesList }: any) {
+function PopularMovies({ popularMoviesList }: { popularMoviesList: PopularMovie[] }) {
   return (
     <MovieList list={popularMoviesList}>
       <div className="title">
@@ -90,7 +89,7 @@ function PopularMovies({ popularMoviesList }: any) {
   );
 }
 
-function SearchResult({queriedMovies}) {
+function SearchResult({ queriedMovies }: { queriedMovies: PopularMovie[] }) {
   return (
     <MovieList list={queriedMovies}>
       <div className="title">

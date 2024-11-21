@@ -18,7 +18,11 @@ interface PopularMovie {
   description: string;
 }
 
-export function SearchBar({ setQueriedMovies }) {
+interface searchbar{
+  setQueriedMovies:Function
+}
+
+export function SearchBar({ setQueriedMovies }:searchbar) {
   const [query, setQuery] = useState<string>("");
 
   async function handleSearchMovie(query: string) {

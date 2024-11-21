@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { Button } from "../components/Button";
 import {Link} from 'react-router-dom'
 
@@ -36,8 +37,12 @@ export function LoginHeading() {
   );
 }
 
-export function LoginForm({ children }) {
-  return <form className="user-login flex">{children}</form>;
+
+interface LoginFormProps {
+  children: ReactNode;
 }
 
+export function LoginForm({ children }: LoginFormProps) {
+  return <form className="user-login flex">{children}</form>;
+}
 export default UserLoginPage;

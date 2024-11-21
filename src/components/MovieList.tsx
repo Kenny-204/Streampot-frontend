@@ -1,15 +1,28 @@
+import { ReactNode } from "react";
+import { BookMarkIcon } from "./Icons";
 import { tempMovieData } from "./Main";
 
-export function MovieList({ children, list = tempMovieData }) {
+interface movie {
+  imdbID: string;
+  Title: string;
+  Year: string;
+  Poster: string;
+  
+}
+
+interface movieList {
+  children: ReactNode;
+  list?: movie[];
+}
+
+export function MovieList({ children, list=tempMovieData  }:movieList) {
   return (
     <div className="movie-list">
       {children}
       <ul className="flex movies">
         {list.map((movie) => (
           <Movie
-            title={movie.Title}
-            year={movie.Year}
-            image={movie.Poster}
+            movie={movie}
             key={movie.imdbID}
           />
         ))}
@@ -17,15 +30,15 @@ export function MovieList({ children, list = tempMovieData }) {
     </div>
   );
 }
-function Movie({ title = "", year = "", image = "" }) {
+function Movie({  movie }:any) {
   return (
     <li className="flex movie">
-      <span className="fa fa-bookmark"></span>
-      <img src={image} alt={title} width="150px" height="225px" />
+      <BookMarkIcon onClick={() => console.log(movie)} />
+      <img src={movie.Poster} alt={movie.Title} width="150px" height="225px" />
       <div className="movie-details">
         <p className="movie-rating">83/100</p>
         <p className="movie-title">
-          {title} ({year})
+          {movie.Title} ({movie.Year})
         </p>
       </div>
     </li>

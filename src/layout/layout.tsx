@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import Main from "../components/Main";
 import SideNav from "../components/sideNav";
 
@@ -7,7 +8,7 @@ interface watchListItem {
 }
 interface Layout {
   watchList: watchListItem[] | undefined;
-  children: any;
+  children: ReactNode;
 }
 
 function Layout({ children, watchList }: Layout) {

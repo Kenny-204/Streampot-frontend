@@ -1,3 +1,5 @@
+import { MouseEventHandler } from "react";
+
 export function HouseIcon() {
   return (
     <svg
@@ -18,7 +20,12 @@ export function HouseIcon() {
     </svg>
   );
 }
-export function BookMarkIcon() {
+
+interface bookmark {
+  onClick?: MouseEventHandler<SVGSVGElement>;
+}
+
+export function BookMarkIcon({ onClick }: bookmark) {
   return (
     <svg
       className="svg-inline--fa fa-bookmark"
@@ -30,6 +37,7 @@ export function BookMarkIcon() {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 384 512"
       data-fa-i2svg=""
+      onClick={onClick}
     >
       <path
         fill="currentColor"
