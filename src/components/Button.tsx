@@ -1,4 +1,4 @@
-import { FormEvent, MouseEvent, MouseEventHandler, ReactNode } from "react";
+import { FormEvent, MouseEvent, ReactNode } from "react";
 
 const buttonStyle = {
   color: "#141414",
