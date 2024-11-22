@@ -8,31 +8,44 @@ import NotFoundPage from "../pages/NotFoundPage";
 import EditWatchList from "../pages/editWatchList";
 import History from "../pages/history";
 import UserSignUp from "../pages/userSignup";
-
 import WatchListDetail from "../pages/watchListDetails";
+import MovieDetail from "../pages/movieDetail";
+import { MovieList } from "./MovieList";
 
-interface watchListItem {
+interface WatchListItem {
   title: string;
   image: string;
+  description?: string;
 }
 
-interface currentWatchList {
+interface CurrentWatchList {
   title: string;
   description: string;
-  items: any[];
+  items: WatchListItem[];
+}
+
+interface CurrentMovie {
+  name: string;
+  image: string;
+  year: string;
+  description: string;
+  score: number;
 }
 
 function App() {
-  const [watchList, setWatchList] = useState<watchListItem[]>([]);
-  const [watchListName, setWatchlistName] = useState("");
-  const [watchListDescription, setWatchlistDescription] = useState("");
-  const [currentWatchList, setCurrentWatchList] = useState<
-    currentWatchList 
-  >(Object);
+  const [watchList, setWatchList] = useState<WatchListItem[]>([]);
+  const [watchListName, setWatchlistName] = useState<string>("");
+  const [watchListDescription, setWatchlistDescription] = useState<string>("");
+  const [currentWatchList, setCurrentWatchList] = useState<CurrentWatchList>({
+    title: "",
+    description: "",
+    items: []
+  });
+  const [currentMovie, setCurrentMovie] = useState<CurrentMovie | any>();
 
   function handleCreateWatchList() {
     // create a new list out of the inserted name and description
-    const newList = {
+    const newList: WatchListItem = {
       image: "32.webp",
       title: watchListName,
       description: watchListDescription,
@@ -45,7 +58,7 @@ function App() {
   }
 
   function handleSetCurrentWatchList() {
-    const newCurrentWatchList = {
+    const newCurrentWatchList: CurrentWatchList = {
       title: watchListName,
       description: watchListDescription,
       items: [],
@@ -65,7 +78,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <HomePage />,
+          element: <HomePage setCurrentMovie={setCurrentMovie} />,
         },
         {
           path: "/login",
@@ -96,10 +109,17 @@ function App() {
           path: "/signup",
           element: <UserSignUp />,
         },
-
         {
           path: "/watchlistdetail",
           element: <WatchListDetail currentWatchlist={currentWatchList} />,
+        },
+        {
+          path: "/moviedetail",
+          element: <MovieDetail currentMovie={currentMovie!} />,
+        },
+        {
+          path: "/movieList",
+          element: <MovieList />,
         },
       ],
       errorElement: <NotFoundPage />,

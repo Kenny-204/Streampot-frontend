@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import  { WelcomeSection } from "../components/Main";
+import { WelcomeSection } from "../components/Main";
 import { SearchBar } from "../components/SearchBar";
 import { MovieList } from "../components/MovieList";
-
 
 // Define the movie interface
 interface Movie {
@@ -11,6 +10,7 @@ interface Movie {
   poster_path: string;
   release_date: string;
   title: string;
+  vote_average: number;
 }
 
 // Define the popularMoviesList interface
@@ -20,6 +20,7 @@ interface PopularMovie {
   Year: string;
   Poster: string;
   description: string;
+  score: number; // Added missing score property
 }
 
 // Define the API URL and options
@@ -34,27 +35,23 @@ const options = {
   },
 };
 
-function HomePage() {
-  // Correct the type of state
-  const [popularMoviesList, setPopularMoviesList] = useState<PopularMovie[]>(
-    []
-  );
+function HomePage({ setCurrentMovie }: { setCurrentMovie: (movie: PopularMovie) => void }) {
+  const [popularMoviesList, setPopularMoviesList] = useState<PopularMovie[]>([]);
   const [queriedMovies, setQueriedMovies] = useState<PopularMovie[]>([]);
 
-  // Fetch and process data inside useEffect
   useEffect(() => {
     async function getPopularMoviesList() {
       try {
         const request = await fetch(url, options);
         const data = await request.json();
 
-        // Map and transform the data to match PopularMovie interface
         const editData: PopularMovie[] = data.results.map((movie: Movie) => ({
           imdbID: movie.id,
           Title: movie.title,
           Year: movie.release_date,
           Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
           description: movie.overview,
+          score: Math.round(movie.vote_average * 10)
         }));
 
         console.log(editData);
@@ -71,17 +68,29 @@ function HomePage() {
       <WelcomeSection />
       <SearchBar setQueriedMovies={setQueriedMovies} />
       {queriedMovies.length === 0 ? (
-        <PopularMovies popularMoviesList={popularMoviesList} />
+        <PopularMovies
+          popularMoviesList={popularMoviesList}
+          setCurrentMovie={setCurrentMovie}
+        />
       ) : (
-        <SearchResult queriedMovies={queriedMovies} />
+        <SearchResult
+          queriedMovies={queriedMovies}
+          setCurrentMovie={setCurrentMovie}
+        />
       )}
     </>
   );
 }
 
-function PopularMovies({ popularMoviesList }: { popularMoviesList: PopularMovie[] }) {
+function PopularMovies({
+  popularMoviesList,
+  setCurrentMovie,
+}: {
+  popularMoviesList: PopularMovie[];
+  setCurrentMovie: (movie: PopularMovie) => void;
+}) {
   return (
-    <MovieList list={popularMoviesList}>
+    <MovieList list={popularMoviesList} setCurrentMovie={setCurrentMovie}>
       <div className="title">
         <p>Popular movies right now</p>
       </div>
@@ -89,11 +98,18 @@ function PopularMovies({ popularMoviesList }: { popularMoviesList: PopularMovie[
   );
 }
 
-function SearchResult({ queriedMovies }: { queriedMovies: PopularMovie[] }) {
+function SearchResult({
+  queriedMovies,
+  setCurrentMovie,
+}: {
+  queriedMovies: PopularMovie[];
+  setCurrentMovie: (movie: PopularMovie) => void;
+}) {
   return (
-    <MovieList list={queriedMovies}>
+    <MovieList list={queriedMovies} setCurrentMovie={setCurrentMovie}>
       <div className="title">
-        <p>Popular movies right now</p>
+        <p>You searched for:</p>
+        <p>Showing {queriedMovies.length} results</p>
       </div>
     </MovieList>
   );

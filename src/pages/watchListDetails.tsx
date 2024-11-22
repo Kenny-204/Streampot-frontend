@@ -20,7 +20,7 @@ function WatchListDetail({ currentWatchlist }: { currentWatchlist: CurrentWatchL
       <p>About this watchlist</p>
       <p className="list-description">{currentWatchlist.description}</p>
 
-      {currentWatchlist.items?.length === 0 ? (
+      {currentWatchlist.items?.length != 0 ? (
         <p>You currently do not have any movies here... go and add some <Link to='/'>Here</Link> </p>
       ) : (
         <MovieList list={currentWatchlist.items}>
@@ -38,7 +38,7 @@ function WatchListDetail({ currentWatchlist }: { currentWatchlist: CurrentWatchL
   );
 }
 
-function DetailBox({ title, metric }: DetailBoxProps) {
+export function DetailBox({ title, metric }: DetailBoxProps) {
   return (
     <div className="detail-box flex">
       <p>{title}</p>

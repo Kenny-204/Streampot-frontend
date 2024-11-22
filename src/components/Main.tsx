@@ -7,24 +7,28 @@ export const tempMovieData = [
     Title: "Top Gun: Maverick",
     Year: "2022",
     Poster: "movie1.webp",
+    score: 0,
   },
   {
     imdbID: "tt013s3093",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
+    score: 0,
   },
   {
     imdbID: "tt13756s66",
     Title: "Top Gun: Maverick",
     Year: "2022",
     Poster: "movie1.webp",
+    score: 0,
   },
   {
     imdbID: "tt0133s0093",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
+    score: 0,
   },
   {
     imdbID: "tt67l5166a8",
@@ -32,12 +36,14 @@ export const tempMovieData = [
     Year: "2019",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+    score: 0,
   },
   {
     imdbID: "tt013n30093",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
+    score: 0,
   },
   {
     imdbID: "tt6751m668",
@@ -45,12 +51,14 @@ export const tempMovieData = [
     Year: "2019",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+    score: 0,
   },
   {
     imdbID: "tt01330p093",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
+    score: 0,
   },
   {
     imdbID: "tt675166b8",
@@ -58,12 +66,14 @@ export const tempMovieData = [
     Year: "2019",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+    score: 0,
   },
   {
     imdbID: "tt0133009v3",
     Title: "Fantastic Beasts: The secrets of Dumbledore",
     Year: "2022",
     Poster: "movie2.webp",
+    score: 0,
   },
   {
     imdbID: "tt67516g68",
@@ -71,6 +81,7 @@ export const tempMovieData = [
     Year: "2019",
     Poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+    score: 0,
   },
 ];
 

@@ -7,6 +7,7 @@ interface Movie {
   poster_path: string;
   release_date: string;
   title: string;
+  vote_average: number;
 }
 
 // Define the popularMoviesList interface
@@ -18,11 +19,11 @@ interface PopularMovie {
   description: string;
 }
 
-interface searchbar{
-  setQueriedMovies:Function
+interface searchbar {
+  setQueriedMovies: Function;
 }
 
-export function SearchBar({ setQueriedMovies }:searchbar) {
+export function SearchBar({ setQueriedMovies }: searchbar) {
   const [query, setQuery] = useState<string>("");
 
   async function handleSearchMovie(query: string) {
@@ -39,6 +40,7 @@ export function SearchBar({ setQueriedMovies }:searchbar) {
 
       const response = await fetch(url, options);
       const data = await response.json();
+      console.log(data.results);
 
       // Map and transform the data to match PopularMovie interface
       const editData: PopularMovie[] = data.results.map((movie: Movie) => ({
@@ -47,8 +49,8 @@ export function SearchBar({ setQueriedMovies }:searchbar) {
         Year: movie.release_date,
         Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
         description: movie.overview,
+        score: Math.round(movie.vote_average * 10),
       }));
-      console.log(data.results);
       setQueriedMovies(editData);
     } catch (e: any) {
       console.error(e.message);

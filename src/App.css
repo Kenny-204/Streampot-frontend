@@ -217,6 +217,7 @@ input {
 .movie-list .movie {
   width: 150px;
   background-color: #1f1f1f;
+  cursor: pointer;
 }
 .movie {
   font-size: 16px;
@@ -325,7 +326,7 @@ input {
   gap: 20px;
   margin-bottom: 5%;
 }
-.watchlist-detail .detail-box {
+ .detail-box {
   background-color: rgba(217, 217, 217, 0.1);
   border: #a41b1b 1px solid;
   border-radius: 5px;
@@ -336,8 +337,25 @@ input {
   align-items: center;
 }
 
-.watchlist-detail .metric {
+ .metric {
   font-size: 30px;
   color: #f33f3f;
 }
 /* watchlist detail end*/
+/* movie-details */
+.movie-details{
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+.movie-details h2,.movie-details h4{
+  padding: 5px 0;
+}
+.movie-details .buttons {
+  align-items: center;
+  gap: 30px;
+}
+.movie-details .movie-details-button{
+  padding: 15px 20px;
+}
+/* movie-details end */
