@@ -3,8 +3,13 @@ import Main from "../components/Main";
 import SideNav from "../components/sideNav";
 
 interface watchListItem {
+  id?: string;
   title: string;
-  image: string;
+  year?: string;
+  poster?: string;
+  description: string;
+  score?: number;
+  image?: string; 
 }
 interface Layout {
   watchList: watchListItem[] | undefined;

@@ -3,8 +3,13 @@ import { NavLink } from "react-router-dom";
 import { HouseIcon, HistoryIcon, PlusIcon, CommentIcon } from "./Icons";
 
 interface watchListItem {
+  id?: string;
   title: string;
-  image: string;
+  year?: string;
+  poster?: string;
+  description: string;
+  score?: number;
+  image?: string; 
 }
 interface watchList {
   watchList: watchListItem[] | undefined;

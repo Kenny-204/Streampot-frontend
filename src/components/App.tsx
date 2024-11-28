@@ -11,11 +11,16 @@ import UserSignUp from "../pages/userSignup";
 import WatchListDetail from "../pages/watchListDetails";
 import MovieDetail from "../pages/movieDetail";
 import { MovieList } from "./MovieList";
+import { tempMovieData } from "./Main";
 
 interface WatchListItem {
+  id?: string;
   title: string;
-  image: string;
-  description?: string;
+  year?: string;
+  poster?: string;
+  description: string;
+  score?: number;
+  image?: string; 
 }
 
 interface CurrentWatchList {
@@ -25,6 +30,7 @@ interface CurrentWatchList {
 }
 
 interface CurrentMovie {
+  id:number;
   name: string;
   image: string;
   year: string;
@@ -39,7 +45,7 @@ function App() {
   const [currentWatchList, setCurrentWatchList] = useState<CurrentWatchList>({
     title: "",
     description: "",
-    items: []
+    items:[]
   });
   const [currentMovie, setCurrentMovie] = useState<CurrentMovie | any>();
 
@@ -49,6 +55,7 @@ function App() {
       image: "32.webp",
       title: watchListName,
       description: watchListDescription,
+      
     };
     // add the new list to the original list
     setWatchList([...watchList, newList]);
@@ -61,7 +68,8 @@ function App() {
     const newCurrentWatchList: CurrentWatchList = {
       title: watchListName,
       description: watchListDescription,
-      items: [],
+      items: []
+
     };
     setCurrentWatchList(newCurrentWatchList);
     console.log(currentWatchList);
@@ -103,7 +111,7 @@ function App() {
         },
         {
           path: "/history",
-          element: <History />,
+          element: <History setCurrentMovie={setCurrentMovie} />,
         },
         {
           path: "/signup",
@@ -111,16 +119,12 @@ function App() {
         },
         {
           path: "/watchlistdetail",
-          element: <WatchListDetail currentWatchlist={currentWatchList} />,
+          element: <WatchListDetail currentWatchlist={currentWatchList} setCurrentMovie={setCurrentMovie} />,
         },
         {
           path: "/moviedetail",
           element: <MovieDetail currentMovie={currentMovie!} />,
-        },
-        {
-          path: "/movieList",
-          element: <MovieList />,
-        },
+        }
       ],
       errorElement: <NotFoundPage />,
     },

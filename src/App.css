@@ -218,14 +218,16 @@ input {
   width: 150px;
   background-color: #1f1f1f;
   cursor: pointer;
-}
-.movie {
   font-size: 16px;
   gap: 10px;
-
-  /* padding: 10px; */
   position: relative;
+  transition :all 0.5 1s ease-in-out
 }
+.movie-list .movie:hover {
+  transform: translateY(-2px);
+/* background-color: red; */
+}
+
 .movie svg {
   position: absolute;
   top: 2px;
@@ -343,6 +345,10 @@ input {
 }
 /* watchlist detail end*/
 /* movie-details */
+.movie-details-container{
+
+  /* flex-wrap: wrap; */
+}
 .movie-details{
   flex-direction: column;
   justify-content: space-between;
@@ -357,5 +363,24 @@ input {
 }
 .movie-details .movie-details-button{
   padding: 15px 20px;
+}
+.cast-container{
+  margin: 2% 0 ;
+}
+.cast-container .cast-list{
+  gap: 3%;
+  overflow-x: auto;
+}
+.cast-container .cast{
+  width: 150px;
+  color: #E1E1E1;
+  padding: 0 0 10px 0;
+  background-color: #1f1f1f;
+}
+.cast .cast-name{
+  font-size: 16px;
+}
+.cast .cast-role{
+  font-size: 14px;
 }
 /* movie-details end */

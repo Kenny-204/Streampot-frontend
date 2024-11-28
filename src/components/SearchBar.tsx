@@ -12,7 +12,7 @@ interface Movie {
 
 // Define the popularMoviesList interface
 interface PopularMovie {
-  imdbID: string;
+  id: string;
   Title: string;
   Year: string;
   Poster: string;
@@ -21,10 +21,19 @@ interface PopularMovie {
 
 interface searchbar {
   setQueriedMovies: Function;
+  setLoading: Function;
+  setError: Function;
+  query: string;
+  setQuery: Function;
 }
 
-export function SearchBar({ setQueriedMovies }: searchbar) {
-  const [query, setQuery] = useState<string>("");
+export function SearchBar({
+  query,
+  setQuery,
+  setQueriedMovies,
+  setLoading,
+  setError,
+}: searchbar) {
 
   async function handleSearchMovie(query: string) {
     try {
@@ -37,14 +46,24 @@ export function SearchBar({ setQueriedMovies }: searchbar) {
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YjA0ODNiMjRkYjY1NjM0MDdlZDNmZGM2YTc5NzJlZiIsIm5iZiI6MTczMTk5ODAzNS4wMzcwMTEsInN1YiI6IjY3M2I4NzYzYTA5MWMwMGExNWE2ZmM4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5m-QqxGUuZUFIuKb0TQhY-O86izJZ-ZVmwBsVkTNTs4",
         },
       };
-
+      setLoading(true);
+      setError("");
       const response = await fetch(url, options);
+      console.log(response);
+      if (!response.ok) {
+        throw new Error(
+          "There was an error fetching your request... check your internet connection and try again"
+        );
+      }
       const data = await response.json();
-      console.log(data.results);
+      if (data.results.length === 0) {
+        throw new Error("Couldnt find your movie");
+      }
+      console.log(data);
 
       // Map and transform the data to match PopularMovie interface
       const editData: PopularMovie[] = data.results.map((movie: Movie) => ({
-        imdbID: movie.id,
+        id: movie.id,
         Title: movie.title,
         Year: movie.release_date,
         Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
@@ -54,6 +73,9 @@ export function SearchBar({ setQueriedMovies }: searchbar) {
       setQueriedMovies(editData);
     } catch (e: any) {
       console.error(e.message);
+      setError(e.message);
+    } finally {
+      setLoading(false);
     }
   }
 

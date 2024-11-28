@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { WelcomeSection } from "../components/Main";
 import { SearchBar } from "../components/SearchBar";
 import { MovieList } from "../components/MovieList";
+import { Loader } from "../components/Loader";
+import { RenderError } from "../components/Error";
 
 // Define the movie interface
 interface Movie {
@@ -15,7 +17,7 @@ interface Movie {
 
 // Define the popularMoviesList interface
 interface PopularMovie {
-  imdbID: string;
+  id: string;
   Title: string;
   Year: string;
   Poster: string;
@@ -35,29 +37,48 @@ const options = {
   },
 };
 
-function HomePage({ setCurrentMovie }: { setCurrentMovie: (movie: PopularMovie) => void }) {
-  const [popularMoviesList, setPopularMoviesList] = useState<PopularMovie[]>([]);
+function HomePage({
+  setCurrentMovie,
+}: {
+  setCurrentMovie: (movie: PopularMovie) => void;
+}) {
+  const [popularMoviesList, setPopularMoviesList] = useState<PopularMovie[]>(
+    []
+  );
+  const [query, setQuery] = useState<string>("");
   const [queriedMovies, setQueriedMovies] = useState<PopularMovie[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     async function getPopularMoviesList() {
       try {
-        const request = await fetch(url, options);
-        const data = await request.json();
+        setLoading(true);
+        setError("");
+        const response = await fetch(url, options);
+        if (!response) {
+          throw new Error(
+            "There was an error fetching your request... check your internet connection and try again"
+          );
+        }
+        const data = await response.json();
 
         const editData: PopularMovie[] = data.results.map((movie: Movie) => ({
-          imdbID: movie.id,
+          id: movie.id,
           Title: movie.title,
           Year: movie.release_date,
           Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
           description: movie.overview,
-          score: Math.round(movie.vote_average * 10)
+          score: Math.round(movie.vote_average * 10),
         }));
 
         console.log(editData);
         setPopularMoviesList(editData);
-      } catch (error) {
-        console.error("Failed to fetch popular movies:", error);
+      } catch (error: any) {
+        console.log("Failed to fetch popular movies:");
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     }
     getPopularMoviesList();
@@ -66,8 +87,18 @@ function HomePage({ setCurrentMovie }: { setCurrentMovie: (movie: PopularMovie) 
   return (
     <>
       <WelcomeSection />
-      <SearchBar setQueriedMovies={setQueriedMovies} />
-      {queriedMovies.length === 0 ? (
+      <SearchBar
+        setQueriedMovies={setQueriedMovies}
+        setLoading={setLoading}
+        setError={setError}
+        query={query}
+        setQuery={setQuery}
+      />
+      {loading ? (
+        <Loader />
+      ) : error ? (
+        <RenderError message={error} />
+      ) : queriedMovies.length === 0 ? (
         <PopularMovies
           popularMoviesList={popularMoviesList}
           setCurrentMovie={setCurrentMovie}
@@ -81,7 +112,6 @@ function HomePage({ setCurrentMovie }: { setCurrentMovie: (movie: PopularMovie) 
     </>
   );
 }
-
 function PopularMovies({
   popularMoviesList,
   setCurrentMovie,
@@ -108,7 +138,6 @@ function SearchResult({
   return (
     <MovieList list={queriedMovies} setCurrentMovie={setCurrentMovie}>
       <div className="title">
-        <p>You searched for:</p>
         <p>Showing {queriedMovies.length} results</p>
       </div>
     </MovieList>

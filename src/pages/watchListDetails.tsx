@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { MovieList } from "../components/MovieList";
 
@@ -13,24 +12,36 @@ interface DetailBoxProps {
   metric: string | number;
 }
 
-function WatchListDetail({ currentWatchlist }: { currentWatchlist: CurrentWatchList }) {
+function WatchListDetail({
+  currentWatchlist,
+  setCurrentMovie
+}: {
+  currentWatchlist: CurrentWatchList;
+  setCurrentMovie:Function
+}) {
+  const totalMovies = currentWatchlist.items?.length;
+  const totalScore = currentWatchlist.items.reduce((prev, watchListItem) => {
+    return watchListItem?.score + prev;
+  }, 0);
+  const averageScore = Math.trunc(totalScore / totalMovies);
+
   return (
     <section className="watchlist-detail">
       <p className="header">{currentWatchlist.title}</p>
       <p>About this watchlist</p>
       <p className="list-description">{currentWatchlist.description}</p>
 
-      {currentWatchlist.items?.length != 0 ? (
-        <p>You currently do not have any movies here... go and add some <Link to='/'>Here</Link> </p>
+      {totalMovies === 0 ? (
+        <p>
+          You currently do not have any movies here... go and add some{" "}
+          <Link to="/">Here</Link>{" "}
+        </p>
       ) : (
-        <MovieList list={currentWatchlist.items}>
+        <MovieList list={currentWatchlist.items} setCurrentMovie={setCurrentMovie}>
           <div className="list-details flex">
-            <DetailBox
-              title="ITEMS ON LIST"
-              metric={currentWatchlist.items?.length || 0}
-            />
+            <DetailBox title="ITEMS ON LIST" metric={totalMovies || 0} />
             <DetailBox title="UNWATCHED RUNTIME" metric="14h 30m" />
-            <DetailBox title="AVERAGE SCORE" metric="73" />
+            <DetailBox title="AVERAGE SCORE" metric={averageScore} />
           </div>
         </MovieList>
       )}
