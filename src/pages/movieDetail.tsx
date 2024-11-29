@@ -4,10 +4,10 @@ import { DetailBox } from "./watchListDetails";
 import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
 import { MovieList } from "../components/MovieList";
-interface MovieDetailProps {
-  currentMovie: number | string;
-}
-interface movie {
+import { movie } from "../components/MovieList";
+
+
+interface movieDetail {
   title: string;
   score: number;
   runtime: number;
@@ -24,14 +24,7 @@ interface credit{
   id: number;
 }
 
-interface similarMovies{
-  id: number;
-  title: string;
-  year: string;
-  poster: string;
-  description: string;
-  score: number;
-}
+
 
 const newMovie = {
   title: "title",
@@ -43,10 +36,10 @@ const newMovie = {
   genre: ["data.genres.map((genre) => genre.name)"],
 };
 
-export default function MovieDetail({ currentMovie }: MovieDetailProps) {
-  const [movie, setMovie] = useState<movie>(newMovie);
+export default function MovieDetail({ currentMovie }: {currentMovie:number}) {
+  const [movie, setMovie] = useState<movieDetail>(newMovie);
   const [credits, setCredits] = useState<credit[]>([]);
-  const [similarMovies, setSimilarMovies] = useState<similarMovies>();
+  const [similarMovies, setSimilarMovies] = useState<movie[]>(Object);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 

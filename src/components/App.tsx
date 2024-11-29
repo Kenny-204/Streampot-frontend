@@ -10,8 +10,7 @@ import History from "../pages/history";
 import UserSignUp from "../pages/userSignup";
 import WatchListDetail from "../pages/watchListDetails";
 import MovieDetail from "../pages/movieDetail";
-import { MovieList } from "./MovieList";
-import { tempMovieData } from "./Main";
+
 
 interface WatchListItem {
   id?: string;
@@ -29,14 +28,8 @@ interface CurrentWatchList {
   items: WatchListItem[];
 }
 
-interface CurrentMovie {
-  id:number;
-  name: string;
-  image: string;
-  year: string;
-  description: string;
-  score: number;
-}
+
+
 
 function App() {
   const [watchList, setWatchList] = useState<WatchListItem[]>([]);
@@ -47,7 +40,7 @@ function App() {
     description: "",
     items:[]
   });
-  const [currentMovie, setCurrentMovie] = useState<CurrentMovie | any>();
+  const [currentMovie, setCurrentMovie] = useState<number>();
 
   function handleCreateWatchList() {
     // create a new list out of the inserted name and description

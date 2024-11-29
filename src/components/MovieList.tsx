@@ -1,33 +1,30 @@
 import { ReactNode } from "react";
 import { BookMarkIcon } from "./Icons";
-import { tempMovieData } from "./Main";
-import { Link, useNavigate } from "react-router-dom";
 
-interface movie {
+import { useNavigate } from "react-router-dom";
+// import { movie } from "../../types";
+
+
+interface movieList {
+  children: ReactNode;
+  list: movie[];
+  setCurrentMovie?: Function;
+}
+
+
+export interface movie {
   id: string;
   title: string;
   year: string;
   poster: string;
-  score:number
-}
-
-interface movieList {
-  children?: ReactNode;
-  list?: movie[];
-  setCurrentMovie: Function;
-  id?: number;
-  title?: string;
-  year?: string;
-  poster?: string;
-  description?: string;
-  score?: number;
+  score: number;
 }
 
 
 
 export function MovieList({
   children,
-  list = tempMovieData,
+  list ,
   setCurrentMovie,
 }: movieList) {
 
@@ -39,7 +36,7 @@ export function MovieList({
           <Movie
             movie={movie}
             key={i}
-            setCurrentMovie={setCurrentMovie}
+            setCurrentMovie={setCurrentMovie!}
           />
         ))}
       </ul>
