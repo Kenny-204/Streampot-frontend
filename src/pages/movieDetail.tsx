@@ -3,7 +3,7 @@ import { Button } from "../components/Button";
 import { DetailBox } from "./watchListDetails";
 import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
-import { MovieList } from "../components/MovieList";
+// import { MovieList } from "../components/MovieList";
 import { movie } from "../components/MovieList";
 
 
@@ -179,9 +179,9 @@ export default function MovieDetail({ currentMovie }: {currentMovie:number}) {
               ))}
             </div>
           </div>
-          <MovieList list={similarMovies}>
+          {/* <MovieList list={similarMovies}>
             <h5>Related Movies</h5>
-          </MovieList>
+          </MovieList> */}
         </div>
       )}{" "}
     </>
