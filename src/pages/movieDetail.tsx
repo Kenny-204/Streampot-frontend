@@ -46,7 +46,6 @@ export default function MovieDetail({ currentMovie }: {currentMovie:number}) {
   const movieDataUrl = `https://api.themoviedb.org/3/movie/${currentMovie}?language=en-US`;
   const similarMoviesUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/similar`;
   const creditsUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/credits`;
-
   const options = {
     method: "GET",
     headers: {
@@ -128,6 +127,8 @@ export default function MovieDetail({ currentMovie }: {currentMovie:number}) {
   const convertHour = hour < 10 ? `0${hour}` : `${hour}`;
   const convertMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
   const time = `${convertHour}h ${convertMinutes}m`;
+console.log(similarMovies)
+
   return (
     <>
       {loading ? (
