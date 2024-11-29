@@ -14,7 +14,7 @@ function UserSignUp() {
     },
     body: JSON.stringify({ email, password, userName }),
   };
-  async function handleUserSignup(e) {
+  async function handleUserSignup(e: any) {
     e.preventDefault()
     const request = await fetch("/auth/register", options);
     const data = request.json();

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { movie } from "./MovieList";
+
 
 // Define the movie interface
 interface Movie {
@@ -10,14 +11,6 @@ interface Movie {
   vote_average: number;
 }
 
-// Define the popularMoviesList interface
-interface PopularMovie {
-  id: string;
-  Title: string;
-  Year: string;
-  Poster: string;
-  description: string;
-}
 
 interface searchbar {
   setQueriedMovies: Function;
@@ -62,7 +55,7 @@ export function SearchBar({
       console.log(data);
 
       // Map and transform the data to match PopularMovie interface
-      const editData: PopularMovie[] = data.results.map((movie: Movie) => ({
+      const editData: movie[] = data.results.map((movie: Movie) => ({
         id: movie.id,
         Title: movie.title,
         Year: movie.release_date,
