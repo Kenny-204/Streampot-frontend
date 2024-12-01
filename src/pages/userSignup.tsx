@@ -15,7 +15,7 @@ function UserSignUp() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { signup, currentUser } = useAuth();
+  const { signup } = useAuth();
 
   async function handleUserSignup(
     e: FormEvent<HTMLFormElement>,

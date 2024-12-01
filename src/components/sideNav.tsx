@@ -2,7 +2,7 @@ import { Button } from "./Button";
 import { Link, NavLink } from "react-router-dom";
 import { HouseIcon, HistoryIcon, PlusIcon, Ellipsis } from "./Icons";
 import { useAuth } from "../contexts/authContext";
-import WatchListDetail from "../pages/watchListDetails";
+
 
 interface watchListItem {
   id?: string;
@@ -107,7 +107,7 @@ title:string;
 setCurrentWatchList:Function
 }
 
-function WatchListItem({ image, title,setCurrentWatchList }:watchListItemProps) {
+function WatchListItem({ image, title }:watchListItemProps) {
   return (
 
     <li>
