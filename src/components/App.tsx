@@ -10,7 +10,12 @@ import History from "../pages/history";
 import UserSignUp from "../pages/userSignup";
 import WatchListDetail from "../pages/watchListDetails";
 import MovieDetail from "../pages/movieDetail";
+import { AuthProvider } from "../contexts/authContext";
 
+import { movie } from "./MovieList";
+import { tempMovieData } from "./Main";
+import ProfilePage from "../pages/profilePage";
+import StreamMovies from "../pages/streamMovies";
 
 interface WatchListItem {
   id?: string;
@@ -19,17 +24,14 @@ interface WatchListItem {
   poster?: string;
   description: string;
   score?: number;
-  image?: string; 
+  image?: string;
 }
 
 interface CurrentWatchList {
   title: string;
   description: string;
-  items: WatchListItem[];
+  items: movie[];
 }
-
-
-
 
 function App() {
   const [watchList, setWatchList] = useState<WatchListItem[]>([]);
@@ -38,9 +40,10 @@ function App() {
   const [currentWatchList, setCurrentWatchList] = useState<CurrentWatchList>({
     title: "",
     description: "",
-    items:[]
+    items: [],
   });
-  const [currentMovie, setCurrentMovie] = useState<number>();
+  const [currentMovie, setCurrentMovie] = useState<number>(Number);
+  const [streaming,setStreaming] = useState<number>(Number)
 
   function handleCreateWatchList() {
     // create a new list out of the inserted name and description
@@ -61,8 +64,7 @@ function App() {
     const newCurrentWatchList: CurrentWatchList = {
       title: watchListName,
       description: watchListDescription,
-      items: []
-
+      items: tempMovieData,
     };
     setCurrentWatchList(newCurrentWatchList);
     console.log(currentWatchList);
@@ -72,7 +74,7 @@ function App() {
     {
       path: "/",
       element: (
-        <Layout watchList={watchList}>
+        <Layout watchList={watchList} setCurrentWatchList={setCurrentWatchList} >
           <Outlet />
         </Layout>
       ),
@@ -112,12 +114,25 @@ function App() {
         },
         {
           path: "/watchlistdetail",
-          element: <WatchListDetail currentWatchlist={currentWatchList} setCurrentMovie={setCurrentMovie} />,
+          element: (
+            <WatchListDetail
+              currentWatchlist={currentWatchList}
+              setCurrentMovie={setCurrentMovie}
+            />
+          ),
         },
         {
           path: "/moviedetail",
-          element: <MovieDetail currentMovie={currentMovie!} />,
-        }
+          element: <MovieDetail currentMovie={currentMovie} setStreaming={setStreaming} />,
+        },
+        {
+          path: "/profilepage",
+          element: <ProfilePage />,
+        },
+        {
+          path: "/streammovie",
+          element: <StreamMovies streaming={streaming} />,
+        },
       ],
       errorElement: <NotFoundPage />,
     },
@@ -125,7 +140,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </>
   );
 }

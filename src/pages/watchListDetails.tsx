@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { MovieList } from "../components/MovieList";
+import { minutesToHours } from "./movieDetail";
 
 interface CurrentWatchList {
   title: string;
@@ -14,11 +15,16 @@ interface DetailBoxProps {
 
 function WatchListDetail({
   currentWatchlist,
-  setCurrentMovie
+  setCurrentMovie,
 }: {
   currentWatchlist: CurrentWatchList;
-  setCurrentMovie:Function
+  setCurrentMovie: Function;
 }) {
+  const totalRuntime = currentWatchlist.items
+    .map((movie) => movie.runtime)
+    .reduce((a, b) => a + b, 0);
+
+    const hours =  minutesToHours(totalRuntime)
   const totalMovies = currentWatchlist.items?.length;
   const totalScore = currentWatchlist.items.reduce((prev, watchListItem) => {
     return watchListItem?.score + prev;
@@ -37,10 +43,13 @@ function WatchListDetail({
           <Link to="/">Here</Link>{" "}
         </p>
       ) : (
-        <MovieList list={currentWatchlist.items} setCurrentMovie={setCurrentMovie}>
+        <MovieList
+          list={currentWatchlist.items}
+          setCurrentMovie={setCurrentMovie}
+        >
           <div className="list-details flex">
             <DetailBox title="ITEMS ON LIST" metric={totalMovies || 0} />
-            <DetailBox title="UNWATCHED RUNTIME" metric="14h 30m" />
+            <DetailBox title="UNWATCHED RUNTIME" metric={hours} />
             <DetailBox title="AVERAGE SCORE" metric={averageScore} />
           </div>
         </MovieList>

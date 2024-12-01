@@ -14,13 +14,14 @@ interface watchListItem {
 interface Layout {
   watchList: watchListItem[] | undefined;
   children: ReactNode;
+  setCurrentWatchList:Function
 }
 
-function Layout({ children, watchList }: Layout) {
+function Layout({ children, watchList,setCurrentWatchList }: Layout) {
   return (
     <>
       <div className="container flex">
-        <SideNav watchList={watchList} />
+        <SideNav watchList={watchList} setCurrentWatchList={setCurrentWatchList} />
         <Main>{children}</Main>
       </div>
     </>

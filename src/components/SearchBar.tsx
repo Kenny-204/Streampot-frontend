@@ -52,18 +52,18 @@ export function SearchBar({
       if (data.results.length === 0) {
         throw new Error("Couldnt find your movie");
       }
-      console.log(data);
-
+      
       // Map and transform the data to match PopularMovie interface
       const editData: movie[] = data.results.map((movie: Movie) => ({
         id: movie.id,
-        Title: movie.title,
-        Year: movie.release_date,
-        Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+        title: movie.title,
+        year: movie.release_date,
+        poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
         description: movie.overview,
         score: Math.round(movie.vote_average * 10),
       }));
       setQueriedMovies(editData);
+      console.log(editData);
     } catch (e: any) {
       console.error(e.message);
       setError(e.message);

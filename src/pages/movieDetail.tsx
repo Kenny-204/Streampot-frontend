@@ -5,7 +5,13 @@ import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
 // import { MovieList } from "../components/MovieList";
 import { movie } from "../components/MovieList";
+import { useNavigate } from "react-router-dom";
 
+interface MovieDetailProps{
+  currentMovie: number;
+  setStreaming:Function;
+  
+}
 
 interface movieDetail {
   title: string;
@@ -17,14 +23,12 @@ interface movieDetail {
   genre: string[];
 }
 
-interface credit{
+interface credit {
   profileImg: string | null;
   name: string;
   character: string;
   id: number;
 }
-
-
 
 const newMovie = {
   title: "title",
@@ -36,12 +40,27 @@ const newMovie = {
   genre: ["data.genres.map((genre) => genre.name)"],
 };
 
-export default function MovieDetail({ currentMovie }: {currentMovie:number}) {
+
+
+export function minutesToHours(minutes: any) {
+  const hour = Math.trunc(minutes / 60);
+  const minute = Math.trunc(minutes % 60);
+  const convertHour = hour < 10 ? `0${hour}` : `${hour}`;
+  const convertMinutes = minute < 10 ? `0${minute}` : `${minute}`;
+  return `${convertHour}h ${convertMinutes}m`;
+}
+
+export default function MovieDetail({
+  currentMovie,
+  setStreaming,
+  
+}:MovieDetailProps ) {
   const [movie, setMovie] = useState<movieDetail>(newMovie);
   const [credits, setCredits] = useState<credit[]>([]);
   const [similarMovies, setSimilarMovies] = useState<movie[]>(Object);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate()
 
   const movieDataUrl = `https://api.themoviedb.org/3/movie/${currentMovie}?language=en-US`;
   const similarMoviesUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/similar`;
@@ -76,43 +95,44 @@ export default function MovieDetail({ currentMovie }: {currentMovie:number}) {
           creditsDataResponse.json(),
           similarMoviesResponse.json(),
         ]);
-        
-        
+
         // edit movie data
         const newMovie = {
+          imdbId: movieData.imdb_id,
           title: movieData.title,
           score: Math.round(movieData.vote_average * 10),
           runtime: movieData.runtime,
           year: movieData.release_date.slice(0, 4),
           poster: movieData.poster_path,
           description: movieData.overview,
-          genre: movieData.genres.map((genre:any) => genre.name),
+          genre: movieData.genres.map((genre: any) => genre.name),
         };
         console.log(newMovie);
         setMovie(newMovie);
+        setStreaming(newMovie.imdbId)
         // edit credits data
-        const movieCreditsEdit = creditsData.cast.map((credit:any) => ({
+        const movieCreditsEdit = creditsData.cast.map((credit: any) => ({
           profileImg: credit.profile_path,
           name: credit.name,
           character: credit.character,
-          id:credit.id
+          id: credit.id,
         }));
         setCredits(movieCreditsEdit);
         console.log(movieCreditsEdit);
 
         // edit similar movies
-        const similarMoviesEdit = similarMoviesData.results.slice(0,10).map((movie:any) => (
-          
-          {
-          id: movie.id,
-          Title: movie.title,
-          Year: movie.release_date,
-          Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-          description: movie.overview,
-          score: Math.round(movie.vote_average * 10),
-        }));
+        const similarMoviesEdit = similarMoviesData.results
+          .slice(0, 10)
+          .map((movie: any) => ({
+            id: movie.id,
+            Title: movie.title,
+            Year: movie.release_date,
+            Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            description: movie.overview,
+            score: Math.round(movie.vote_average * 10),
+          }));
         setSimilarMovies(similarMoviesEdit);
-        console.log(similarMoviesEdit);
+        // console.log(similarMoviesData.results);
       } catch (error: any) {
         console.log(error.message);
         setError(error.message);
@@ -122,12 +142,14 @@ export default function MovieDetail({ currentMovie }: {currentMovie:number}) {
     }
     getMovieDetail();
   }, []);
-  const hour = Math.trunc(movie.runtime / 60);
-  const minutes = Math.trunc(movie.runtime % 60);
-  const convertHour = hour < 10 ? `0${hour}` : `${hour}`;
-  const convertMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-  const time = `${convertHour}h ${convertMinutes}m`;
-console.log(similarMovies)
+
+  const time = minutesToHours(movie.runtime);
+  console.log(similarMovies);
+
+  function HandleClickStream(){
+    navigate('/streammovie')
+    
+    }
 
   return (
     <>
@@ -163,20 +185,20 @@ console.log(similarMovies)
                 <Button className="movie-details-button">
                   Add to watchlist
                 </Button>
+                <Button className="movie-details-button" onClick={HandleClickStream} >Stream Now</Button>
               </div>
             </div>
           </div>
           <div className="cast-container">
             <h5 style={{ marginBottom: "5px" }}>Cast</h5>
             <div className="cast-list flex">
-              {credits?.map(credit=>(
-
-              <Cast 
-              key={credit.id}
-              img={`https://image.tmdb.org/t/p/w500${credit.profileImg}`}
-              name={credit.name}
-              character={credit.character}
-              />
+              {credits?.map((credit) => (
+                <Cast
+                  key={credit.id}
+                  img={`https://image.tmdb.org/t/p/w500${credit.profileImg}`}
+                  name={credit.name}
+                  character={credit.character}
+                />
               ))}
             </div>
           </div>
@@ -189,14 +211,13 @@ console.log(similarMovies)
   );
 }
 
-
 interface CastProps {
   img: string;
   name: string;
   character: string;
 }
 
-function Cast({img,name,character}:CastProps) {
+function Cast({ img, name, character }: CastProps) {
   return (
     <div className="cast">
       <img src={img} width="150px" height="225px" />

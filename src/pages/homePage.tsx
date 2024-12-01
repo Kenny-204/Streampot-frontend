@@ -64,7 +64,7 @@ function HomePage({
           score: Math.round(movie.vote_average * 10),
         }));
 
-        console.log(editData);
+        console.log(data.results);
         setPopularMoviesList(editData);
       } catch (error: any) {
         console.log("Failed to fetch popular movies:");

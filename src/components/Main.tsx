@@ -9,6 +9,8 @@ export const tempMovieData = [
     poster: "movie1.webp",
     description:'hallo',
     score: 30,
+    runtime:90
+    
   },
   {
     id: "tt013s3093",
@@ -16,6 +18,7 @@ export const tempMovieData = [
     year: "2022",
     poster: "movie2.webp",
     score: 30,
+    runtime:90
   },
   {
     id: "tt13756s66",
@@ -23,6 +26,7 @@ export const tempMovieData = [
     year: "2022",
     poster: "movie1.webp",
     score: 30,
+    runtime:90
   },
   {
     id: "tt0133s0093",
@@ -30,6 +34,7 @@ export const tempMovieData = [
     year: "2022",
     poster: "movie2.webp",
     score: 30,
+    runtime:90
   },
   {
     id: "tt67l5166a8",
@@ -38,6 +43,7 @@ export const tempMovieData = [
     poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
     score: 30,
+    runtime:90
   },
   {
     id: "tt013n30093",
@@ -45,6 +51,7 @@ export const tempMovieData = [
     year: "2022",
     poster: "movie2.webp",
     score: 30,
+    runtime:90
   },
   {
     id: "tt6751m668",
@@ -53,6 +60,7 @@ export const tempMovieData = [
     poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
     score: 30,
+    runtime:90
   },
   {
     id: "tt01330p093",
@@ -60,6 +68,7 @@ export const tempMovieData = [
     year: "2022",
     poster: "movie2.webp",
     score: 30,
+    runtime:90
   },
   {
     id: "tt675166b8",
@@ -68,6 +77,7 @@ export const tempMovieData = [
     poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
     score: 30,
+    runtime:90
   },
   {
     id: "tt0133009v3",
@@ -75,6 +85,7 @@ export const tempMovieData = [
     year: "2022",
     poster: "movie2.webp",
     score: 30,
+    runtime:90
   },
   {
     id: "tt67516g68",
@@ -83,6 +94,7 @@ export const tempMovieData = [
     poster:
       "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
     score: 30,
+    runtime:90
   },
 ];
 
