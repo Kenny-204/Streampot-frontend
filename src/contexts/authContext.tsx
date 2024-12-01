@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from "react";
 
+const API_URL = process.env.REACT_API_URL;
+
 interface authContextType {
   currentUser: any;
   signup: (email: string, password: string, name: string) => Promise<void>;
@@ -21,7 +23,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signup(email: string, password: string, name: string) {
     try {
-      const response = await fetch("http://localhost:3000/auth/register", {
+      const response = await fetch(`${ API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,7 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function login(email: string, password: string) {
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch(`${ API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
