@@ -1,15 +1,16 @@
 import { createContext, ReactNode, useContext, useState } from "react";
+import { API_URL } from "../config";
 
 interface authContextType {
   currentUser: any;
   signup: (email: string, password: string, name: string) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
-  logout:Function
+  logout: Function;
 }
 const AuthContext = createContext<authContextType | undefined>(undefined);
 
 export function useAuth() {
-    const context = useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthProvider");
   }
@@ -21,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function signup(email: string, password: string, name: string) {
     try {
-      const response = await fetch("http://localhost:3000/auth/register", {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,14 +37,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log(data);
       setCurrentUser(data);
     } catch (error) {
-      //   console.log(error);
       throw error;
     }
   }
 
   async function login(email: string, password: string) {
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -61,10 +61,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       throw error;
     }
   }
-  function logout(){
-    setCurrentUser(null)
+  function logout() {
+    setCurrentUser(null);
   }
 
-  const value:authContextType = { currentUser, signup, login,logout };
+  const value: authContextType = { currentUser, signup, login, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

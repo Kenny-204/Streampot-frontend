@@ -16,6 +16,7 @@ import { movie } from "./MovieList";
 import { tempMovieData } from "./Main";
 import ProfilePage from "../pages/profilePage";
 import StreamMovies from "../pages/streamMovies";
+import ProtectedRoute from "../contexts/protectedRoute";
 
 interface WatchListItem {
   id?: string;
@@ -43,7 +44,7 @@ function App() {
     items: [],
   });
   const [currentMovie, setCurrentMovie] = useState<number>(Number);
-  const [streaming,setStreaming] = useState<number>(Number)
+  const [streaming, setStreaming] = useState<number>(Number);
 
   function handleCreateWatchList() {
     // create a new list out of the inserted name and description
@@ -51,7 +52,6 @@ function App() {
       image: "32.webp",
       title: watchListName,
       description: watchListDescription,
-      
     };
     // add the new list to the original list
     setWatchList([...watchList, newList]);
@@ -74,7 +74,7 @@ function App() {
     {
       path: "/",
       element: (
-        <Layout watchList={watchList} setCurrentWatchList={setCurrentWatchList} >
+        <Layout watchList={watchList} setCurrentWatchList={setCurrentWatchList}>
           <Outlet />
         </Layout>
       ),
@@ -84,46 +84,63 @@ function App() {
           element: <HomePage setCurrentMovie={setCurrentMovie} />,
         },
         {
+          path: "/",
+          element: (
+            <ProtectedRoute>
+              <Outlet />
+            </ProtectedRoute>
+          ),
+          children: [
+            {
+              path: "/createWatchlist",
+              element: (
+                <CreateWatchList
+                  watchListName={watchListName}
+                  watchListDescription={watchListDescription}
+                  setWatchlistName={setWatchlistName}
+                  setWatchlistDescription={setWatchlistDescription}
+                  onCreateWatchList={handleCreateWatchList}
+                  onSetCurrentWatchList={handleSetCurrentWatchList}
+                />
+              ),
+            },
+            {
+              path: "/editwatchlist",
+              element: <EditWatchList />,
+            },
+            {
+              path: "/history",
+              element: <History setCurrentMovie={setCurrentMovie} />,
+            },
+            {
+              path: "/watchlistdetail",
+              element: (
+                <WatchListDetail
+                  currentWatchlist={currentWatchList}
+                  setCurrentMovie={setCurrentMovie}
+                />
+              ),
+            },
+          
+          ],
+        },
+        {
           path: "/login",
           element: <UserLoginPage />,
         },
-        {
-          path: "/createWatchlist",
-          element: (
-            <CreateWatchList
-              watchListName={watchListName}
-              watchListDescription={watchListDescription}
-              setWatchlistName={setWatchlistName}
-              setWatchlistDescription={setWatchlistDescription}
-              onCreateWatchList={handleCreateWatchList}
-              onSetCurrentWatchList={handleSetCurrentWatchList}
-            />
-          ),
-        },
-        {
-          path: "/editwatchlist",
-          element: <EditWatchList />,
-        },
-        {
-          path: "/history",
-          element: <History setCurrentMovie={setCurrentMovie} />,
-        },
+
         {
           path: "/signup",
           element: <UserSignUp />,
         },
         {
-          path: "/watchlistdetail",
+          path: "/moviedetail",
           element: (
-            <WatchListDetail
-              currentWatchlist={currentWatchList}
-              setCurrentMovie={setCurrentMovie}
+            <MovieDetail
+              currentMovie={currentMovie}
+              setStreaming={setStreaming}
             />
           ),
-        },
-        {
-          path: "/moviedetail",
-          element: <MovieDetail currentMovie={currentMovie} setStreaming={setStreaming} />,
         },
         {
           path: "/profilepage",

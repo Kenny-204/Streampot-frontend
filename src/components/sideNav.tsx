@@ -1,5 +1,5 @@
 import { Button } from "./Button";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { HouseIcon, HistoryIcon, PlusIcon, Ellipsis } from "./Icons";
 import { useAuth } from "../contexts/authContext";
 
@@ -19,6 +19,8 @@ interface watchList {
 }
 function SideNav({ watchList,setCurrentWatchList }: watchList) {
   const { currentUser } = useAuth();
+const navigate = useNavigate()
+
 
   return (
     <nav className="navbar ">
@@ -42,12 +44,11 @@ function SideNav({ watchList,setCurrentWatchList }: watchList) {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/createWatchlist" className="no-navlink">
-            <Button className="navbar-button">
+          
+            <Button onClick={(e)=>{e.preventDefault();navigate('/createWatchlist')} } className="navbar-button">
               <PlusIcon /> Create WatchList
             </Button>
-          </NavLink>
-          <hr />
+                    <hr />
         </li>
         <li>
           <p>My Lists</p>
@@ -77,9 +78,9 @@ function SideNav({ watchList,setCurrentWatchList }: watchList) {
                 />
                 <p>{currentUser.name}</p>
               </span>
-              <Link to="/signup">
+              
                 <Ellipsis />
-              </Link>
+              
             </NavLink>
           ) : (
             <NavLink to="/login" className="profile ">

@@ -5,6 +5,7 @@ import { MovieList } from "../components/MovieList";
 import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
 import { movie } from "../components/MovieList";
+import { AUTH_BEARER } from "../config";
 
 // Define the movie interface
 interface Movie {
@@ -16,7 +17,6 @@ interface Movie {
   vote_average: number;
 }
 
-
 // Define the API URL and options
 const url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
 
@@ -24,19 +24,12 @@ const options = {
   method: "GET",
   headers: {
     accept: "application/json",
-    Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YjA0ODNiMjRkYjY1NjM0MDdlZDNmZGM2YTc5NzJlZiIsIm5iZiI6MTczMTk5ODAzNS4wMzcwMTEsInN1YiI6IjY3M2I4NzYzYTA5MWMwMGExNWE2ZmM4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5m-QqxGUuZUFIuKb0TQhY-O86izJZ-ZVmwBsVkTNTs4",
+    Authorization: `Bearer ${AUTH_BEARER}`,
   },
 };
 
-function HomePage({
-  setCurrentMovie,
-}: {
-  setCurrentMovie:Function;
-}) {
-  const [popularMoviesList, setPopularMoviesList] = useState<movie[]>(
-    []
-  );
+function HomePage({ setCurrentMovie }: { setCurrentMovie: Function }) {
+  const [popularMoviesList, setPopularMoviesList] = useState<movie[]>([]);
   const [query, setQuery] = useState<string>("");
   const [queriedMovies, setQueriedMovies] = useState<movie[]>([]);
   const [loading, setLoading] = useState(false);

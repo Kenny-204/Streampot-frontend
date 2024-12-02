@@ -1,5 +1,5 @@
+import { AUTH_BEARER } from "../config";
 import { movie } from "./MovieList";
-
 
 // Define the movie interface
 interface Movie {
@@ -10,7 +10,6 @@ interface Movie {
   title: string;
   vote_average: number;
 }
-
 
 interface searchbar {
   setQueriedMovies: Function;
@@ -27,7 +26,6 @@ export function SearchBar({
   setLoading,
   setError,
 }: searchbar) {
-
   async function handleSearchMovie(query: string) {
     try {
       const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`;
@@ -35,8 +33,7 @@ export function SearchBar({
         method: "GET",
         headers: {
           accept: "application/json",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2YjA0ODNiMjRkYjY1NjM0MDdlZDNmZGM2YTc5NzJlZiIsIm5iZiI6MTczMTk5ODAzNS4wMzcwMTEsInN1YiI6IjY3M2I4NzYzYTA5MWMwMGExNWE2ZmM4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.5m-QqxGUuZUFIuKb0TQhY-O86izJZ-ZVmwBsVkTNTs4",
+          Authorization: `Bearer ${AUTH_BEARER}`,
         },
       };
       setLoading(true);
@@ -52,7 +49,7 @@ export function SearchBar({
       if (data.results.length === 0) {
         throw new Error("Couldnt find your movie");
       }
-      
+
       // Map and transform the data to match PopularMovie interface
       const editData: movie[] = data.results.map((movie: Movie) => ({
         id: movie.id,

@@ -9,7 +9,7 @@ export default function StreamMovies({streaming}:{streaming:number}) {
         src={` https://multiembed.mov/?video_id=${streaming}`}
         ></iframe>
      
-      helllo
+      <p>Your movie is now streaming</p>
     </>
   );
 }
