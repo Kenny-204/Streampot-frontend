@@ -1,5 +1,5 @@
 import { Button } from "./Button";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 import { HouseIcon, HistoryIcon, PlusIcon, Ellipsis } from "./Icons";
 import { useAuth } from "../contexts/authContext";
 
