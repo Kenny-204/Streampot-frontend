@@ -5,7 +5,7 @@ import { useAuth } from "../contexts/authContext";
 import { useNavigate } from "react-router-dom";
 import { RenderError } from "../components/Error";
 import { Loader } from "../components/Loader";
-import { PrevButton } from "../components/PrevButton";
+// import { PrevButton } from "../components/PrevButton";
 
 function UserLoginPage() {
   const [email, setEmail] = useState("");
