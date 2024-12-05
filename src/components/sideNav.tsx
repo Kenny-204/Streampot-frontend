@@ -1,27 +1,57 @@
 import { Button } from "./Button";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { HouseIcon, HistoryIcon, PlusIcon, Ellipsis } from "./Icons";
 import { useAuth } from "../contexts/authContext";
-
+import { API_URL } from "../config";
+import { useEffect, useState } from "react";
+import { Loader } from "./Loader";
 
 interface watchListItem {
-  id?: string;
-  title: string;
+  id: number;
+  name: string;
   year?: string;
   poster?: string;
   description: string;
   score?: number;
   image?: string;
 }
-interface watchList {
-  watchList: watchListItem[] | undefined;
-  setCurrentWatchList:Function;
-}
-function SideNav({ watchList,setCurrentWatchList }: watchList) {
+
+function SideNav({
+  // setCurrentWatchListId,
+}: {
+  // setCurrentWatchListId: Function;
+}) {
+  const [watchList, setWatchList] = useState<watchListItem[]>();
+  const [loading, setLoading] = useState(false);
+
   const { currentUser } = useAuth();
-const navigate = useNavigate()
+  const navigate = useNavigate();
+  useEffect(
+    function () {
+      if (currentUser) {
+        async function getWatchList() {
+          try {
+            setLoading(true);
+            const response = await fetch(
+              `${API_URL}/watchlist/user/${currentUser.id}`
+            );
+            const data = await response.json();
+            setWatchList(data);
+          } catch (error: any) {
+            console.log(error.message);
+          } finally {
+            setLoading(false);
+          }
+        }
+        getWatchList();
+      } else {
+        setWatchList([]);
+      }
+    },
+    [currentUser]
+  );
 
-
+  console.log(currentUser);
   return (
     <nav className="navbar ">
       <ul className="nav-list">
@@ -33,7 +63,12 @@ const navigate = useNavigate()
           <input type="text" placeholder="Search" />
         </li>
         <li>
-          <NavLink to="/">
+          <NavLink
+            to="/"
+            // onClick={() => {
+            //   localStorage.clear();
+            // }}
+          >
             {" "}
             <HouseIcon /> Home
           </NavLink>
@@ -44,25 +79,35 @@ const navigate = useNavigate()
           </NavLink>
         </li>
         <li>
-          
-            <Button onClick={(e)=>{e.preventDefault();navigate('/createWatchlist')} } className="navbar-button">
-              <PlusIcon /> Create WatchList
-            </Button>
-                    <hr />
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/createWatchlist");
+            }}
+            className="navbar-button"
+          >
+            <PlusIcon /> Create WatchList
+          </Button>
+          <hr />
         </li>
         <li>
           <p>My Lists</p>
         </li>
       </ul>
       <ul className="watchList">
-        {watchList?.map((watchlistItem, i: number) => (
-          <WatchListItem
-            key={i}
-            title={watchlistItem.title}
-            image={watchlistItem.image!}
-            setCurrentWatchList={setCurrentWatchList}
-          />
-        ))}
+        {loading ? (
+          <Loader width="30" />
+        ) : (
+          watchList?.map((watchlistItem, i: number) => (
+            <WatchListItem
+              key={i}
+              title={watchlistItem.name}
+              image={watchlistItem.image!}
+              id={watchlistItem.id}
+              // setCurrentWatchListId={setCurrentWatchListId}
+            />
+          ))
+        )}
 
         <li>
           {currentUser ? (
@@ -78,9 +123,8 @@ const navigate = useNavigate()
                 />
                 <p>{currentUser.name}</p>
               </span>
-              
-                <Ellipsis />
-              
+
+              <Ellipsis />
             </NavLink>
           ) : (
             <NavLink to="/login" className="profile ">
@@ -91,9 +135,8 @@ const navigate = useNavigate()
                 <img src="32.webp" alt="profile pic" width="30px" />
                 <p>GUEST</p>
               </span>
-              
+
               <Ellipsis />
-              
             </NavLink>
           )}
         </li>
@@ -102,19 +145,28 @@ const navigate = useNavigate()
   );
 }
 
-interface watchListItemProps{
-image:string;
-title:string;
-setCurrentWatchList:Function
+interface watchListItemProps {
+  id: number;
+  image: string;
+  title: string;
+  // setCurrentWatchListId: Function;
 }
 
-function WatchListItem({ image, title }:watchListItemProps) {
+function WatchListItem({
+  // image,
+  title,
+  id,
+  // setCurrentWatchListId,
+}: watchListItemProps) {
   return (
-
     <li>
-     <NavLink to='/watchlistdetail'  className="watchList-item">
-      <img src={image} alt="profile pic" width="30px" />
-      <p>{title}</p>
+      <NavLink
+        to={`/watchlistdetail/${id}`}
+        className="watchList-item"
+        // onClick={() => setCurrentWatchListId(id)}
+      >
+        <img src="32.webp" alt="profile pic" width="30px" />
+        <p>{title}</p>
       </NavLink>
     </li>
   );

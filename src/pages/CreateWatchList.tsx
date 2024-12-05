@@ -1,63 +1,77 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
-import { FormEvent, MouseEvent } from "react";
+import { FormEvent, useState } from "react";
+import { useAuth } from "../contexts/authContext";
+import { API_URL } from "../config";
+import { Loader } from "../components/Loader";
 
-interface CreateWatchList {
-  watchListName: string;
-  watchListDescription: string;
-  setWatchlistDescription: Function;
-  setWatchlistName: Function;
-  onCreateWatchList: Function;
-  onSetCurrentWatchList: Function;
-}
+function CreateWatchList() {
+  // { setCurrentWatchListId }:{setCurrentWatchListId:Function}
+  const [watchListName, setWatchlistName] = useState("");
+  const [watchListDescription, setWatchlistDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
-function CreateWatchList({
-  watchListName,
-  watchListDescription,
-  setWatchlistDescription,
-  setWatchlistName,
-  onCreateWatchList,
-  onSetCurrentWatchList,
-}: CreateWatchList) {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
- 
+  async function createWatchlist(e: FormEvent) {
+    e.preventDefault();
+    if (!watchListName || !watchListDescription) return;
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_URL}/watchlist/create`, {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          name: watchListName,
+          description: watchListDescription,
+          userId: currentUser.id,
+        }),
+      });
+      const data = await response.json();
+      setLoading(false);
+      console.log(data);
+      // setCurrentWatchListId(data.id);
+      navigate(`/watchlistdetail/${data.id}`);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <>
-      <form className="create-watchlist flex">
-        <p role="heading" aria-level={1}>
-          Create a new Watchlist
-        </p>
-        <label htmlFor="watchlist-title"> Name</label>
-        <input
-          type="text"
-          name="watchlist-title"
-          onChange={(e) => setWatchlistName(e.target.value)}
-          value={watchListName}
-        />
-        <label htmlFor="watchlist-description"> Description</label>
-        <input
-          type="text"
-          name="watchlist-description"
-          className="description"
-          onChange={(e) => setWatchlistDescription(e.target.value)}
-          value={watchListDescription}
-        />
-        <Button
-          onClick={(e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-
-            // if theres no name or description
-            if (!watchListName || !watchListDescription) return;
-
-            onCreateWatchList();
-            onSetCurrentWatchList();
-            navigate("/watchlistdetail");
+      {loading ? (
+        <Loader />
+      ) : (
+        <form
+          className="create-watchlist flex"
+          onSubmit={(e) => {
+            createWatchlist(e);
           }}
         >
-          <span className="fa fa-plus"></span> Create WatchList
-        </Button>
-      </form>
+          <p role="heading" aria-level={1}>
+            Create a new Watchlist
+          </p>
+          <label htmlFor="watchlist-title"> Name</label>
+          <input
+            type="text"
+            name="watchlist-title"
+            onChange={(e) => setWatchlistName(e.target.value)}
+            value={watchListName}
+          />
+          <label htmlFor="watchlist-description"> Description</label>
+          <input
+            type="text"
+            name="watchlist-description"
+            className="description"
+            onChange={(e) => setWatchlistDescription(e.target.value)}
+            value={watchListDescription}
+          />
+          <Button>
+            <span className="fa fa-plus"></span> Create WatchList
+          </Button>
+        </form>
+      )}
     </>
   );
 }

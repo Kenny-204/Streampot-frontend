@@ -4,13 +4,14 @@ import { DetailBox } from "./watchListDetails";
 import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
 // import { MovieList } from "../components/MovieList";
-import { movie } from "../components/MovieList";
+import { movie, MovieList } from "../components/MovieList";
 import { useNavigate } from "react-router-dom";
+import { PrevButton } from "../components/PrevButton";
 
-interface MovieDetailProps{
+interface MovieDetailProps {
   currentMovie: number;
-  setStreaming:Function;
-  
+  setStreaming: Function;
+  setQueriedMovies: Function;
 }
 
 interface movieDetail {
@@ -40,8 +41,6 @@ const newMovie = {
   genre: ["data.genres.map((genre) => genre.name)"],
 };
 
-
-
 export function minutesToHours(minutes: any) {
   const hour = Math.trunc(minutes / 60);
   const minute = Math.trunc(minutes % 60);
@@ -53,14 +52,14 @@ export function minutesToHours(minutes: any) {
 export default function MovieDetail({
   currentMovie,
   setStreaming,
-  
-}:MovieDetailProps ) {
+  setQueriedMovies,
+}: MovieDetailProps) {
   const [movie, setMovie] = useState<movieDetail>(newMovie);
   const [credits, setCredits] = useState<credit[]>([]);
   const [similarMovies, setSimilarMovies] = useState<movie[]>(Object);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const movieDataUrl = `https://api.themoviedb.org/3/movie/${currentMovie}?language=en-US`;
   const similarMoviesUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/similar`;
@@ -109,7 +108,7 @@ export default function MovieDetail({
         };
         console.log(newMovie);
         setMovie(newMovie);
-        setStreaming(newMovie.imdbId)
+        setStreaming(newMovie.imdbId);
         // edit credits data
         const movieCreditsEdit = creditsData.cast.map((credit: any) => ({
           profileImg: credit.profile_path,
@@ -146,10 +145,9 @@ export default function MovieDetail({
   const time = minutesToHours(movie.runtime);
   console.log(similarMovies);
 
-  function HandleClickStream(){
-    navigate('/streammovie')
-    
-    }
+  function HandleClickStream() {
+    navigate("/streammovie");
+  }
 
   return (
     <>
@@ -159,6 +157,14 @@ export default function MovieDetail({
         <RenderError message={error} />
       ) : (
         <div>
+          <PrevButton
+            onClick={() => {
+              navigate(-1);
+              setQueriedMovies(
+                JSON.parse(localStorage.getItem("queriedMovies") || "[]")
+              );
+            }}
+          />
           <div className="movie-details-container flex">
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
@@ -185,7 +191,12 @@ export default function MovieDetail({
                 <Button className="movie-details-button">
                   Add to watchlist
                 </Button>
-                <Button className="movie-details-button" onClick={HandleClickStream} >Stream Now</Button>
+                <Button
+                  className="movie-details-button"
+                  onClick={HandleClickStream}
+                >
+                  Stream Now
+                </Button>
               </div>
             </div>
           </div>
@@ -202,6 +213,7 @@ export default function MovieDetail({
               ))}
             </div>
           </div>
+          <button>back</button>
           {/* <MovieList list={similarMovies}>
             <h5>Related Movies</h5>
           </MovieList> */}

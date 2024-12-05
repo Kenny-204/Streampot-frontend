@@ -13,75 +13,35 @@ import MovieDetail from "../pages/movieDetail";
 import { AuthProvider } from "../contexts/authContext";
 
 import { movie } from "./MovieList";
-import { tempMovieData } from "./Main";
+// import { tempMovieData } from "./Main";
 import ProfilePage from "../pages/profilePage";
 import StreamMovies from "../pages/streamMovies";
 import ProtectedRoute from "../contexts/protectedRoute";
 
-interface WatchListItem {
-  id?: string;
-  title: string;
-  year?: string;
-  poster?: string;
-  description: string;
-  score?: number;
-  image?: string;
-}
 
-interface CurrentWatchList {
-  title: string;
-  description: string;
-  items: movie[];
-}
 
 function App() {
-  const [watchList, setWatchList] = useState<WatchListItem[]>([]);
-  const [watchListName, setWatchlistName] = useState<string>("");
-  const [watchListDescription, setWatchlistDescription] = useState<string>("");
-  const [currentWatchList, setCurrentWatchList] = useState<CurrentWatchList>({
-    title: "",
-    description: "",
-    items: [],
-  });
+  const [queriedMovies, setQueriedMovies] = useState<movie[]>([]);
+  // const [currentWatchListId, setCurrentWatchListId] = useState<number>(Number);
   const [currentMovie, setCurrentMovie] = useState<number>(Number);
   const [streaming, setStreaming] = useState<number>(Number);
 
-  function handleCreateWatchList() {
-    // create a new list out of the inserted name and description
-    const newList: WatchListItem = {
-      image: "32.webp",
-      title: watchListName,
-      description: watchListDescription,
-    };
-    // add the new list to the original list
-    setWatchList([...watchList, newList]);
-    // reset the form values
-    setWatchlistName("");
-    setWatchlistDescription("");
-  }
-
-  function handleSetCurrentWatchList() {
-    const newCurrentWatchList: CurrentWatchList = {
-      title: watchListName,
-      description: watchListDescription,
-      items: tempMovieData,
-    };
-    setCurrentWatchList(newCurrentWatchList);
-    console.log(currentWatchList);
-  }
 
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
-        <Layout watchList={watchList} setCurrentWatchList={setCurrentWatchList}>
+        <Layout 
+        // watchList={watchList} 
+        // setCurrentWatchListId={setCurrentWatchListId}
+        >
           <Outlet />
         </Layout>
       ),
       children: [
         {
           path: "/",
-          element: <HomePage setCurrentMovie={setCurrentMovie} />,
+          element: <HomePage setCurrentMovie={setCurrentMovie} setQueriedMovies={setQueriedMovies} queriedMovies={queriedMovies} />,
         },
         {
           path: "/",
@@ -95,12 +55,8 @@ function App() {
               path: "/createWatchlist",
               element: (
                 <CreateWatchList
-                  watchListName={watchListName}
-                  watchListDescription={watchListDescription}
-                  setWatchlistName={setWatchlistName}
-                  setWatchlistDescription={setWatchlistDescription}
-                  onCreateWatchList={handleCreateWatchList}
-                  onSetCurrentWatchList={handleSetCurrentWatchList}
+                
+                  // setCurrentWatchListId={setCurrentWatchListId}
                 />
               ),
             },
@@ -113,10 +69,10 @@ function App() {
               element: <History setCurrentMovie={setCurrentMovie} />,
             },
             {
-              path: "/watchlistdetail",
+              path: "/watchlistdetail/:id",
               element: (
                 <WatchListDetail
-                  currentWatchlist={currentWatchList}
+                  // currentWatchlistId={currentWatchListId}
                   setCurrentMovie={setCurrentMovie}
                 />
               ),
@@ -139,6 +95,7 @@ function App() {
             <MovieDetail
               currentMovie={currentMovie}
               setStreaming={setStreaming}
+              setQueriedMovies={setQueriedMovies}
             />
           ),
         },
@@ -163,5 +120,6 @@ function App() {
     </>
   );
 }
+
 
 export default App;

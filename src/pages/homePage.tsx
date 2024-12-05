@@ -17,6 +17,12 @@ interface Movie {
   vote_average: number;
 }
 
+interface HomepageProps {
+  setCurrentMovie: Function;
+  setQueriedMovies: Function;
+  queriedMovies: movie[];
+}
+
 // Define the API URL and options
 const url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
 
@@ -28,12 +34,18 @@ const options = {
   },
 };
 
-function HomePage({ setCurrentMovie }: { setCurrentMovie: Function }) {
+function HomePage({
+  setCurrentMovie,
+  setQueriedMovies,
+  queriedMovies,
+}: HomepageProps) {
   const [popularMoviesList, setPopularMoviesList] = useState<movie[]>([]);
+
   const [query, setQuery] = useState<string>("");
-  const [queriedMovies, setQueriedMovies] = useState<movie[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  console.log(JSON.parse(localStorage.getItem("queriedMovies") || "[]"));
 
   useEffect(() => {
     async function getPopularMoviesList() {
@@ -83,7 +95,7 @@ function HomePage({ setCurrentMovie }: { setCurrentMovie: Function }) {
         <Loader />
       ) : error ? (
         <RenderError message={error} />
-      ) : queriedMovies.length === 0 ? (
+      ) : JSON.parse(localStorage.getItem('queriedMovies') || '[]').length === 0 ? (
         <PopularMovies
           popularMoviesList={popularMoviesList}
           setCurrentMovie={setCurrentMovie}
@@ -121,7 +133,7 @@ function SearchResult({
   setCurrentMovie: Function;
 }) {
   return (
-    <MovieList list={queriedMovies} setCurrentMovie={setCurrentMovie}>
+    <MovieList list={JSON.parse(localStorage.getItem('queriedMovies') || '[]')} setCurrentMovie={setCurrentMovie}>
       <div className="title">
         <p>Showing {queriedMovies.length} results</p>
       </div>

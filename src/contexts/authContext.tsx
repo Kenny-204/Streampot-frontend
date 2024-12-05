@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { API_URL } from "../config";
 
 interface authContextType {
@@ -19,6 +25,15 @@ export function useAuth() {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(function () {
+    const savedUser = localStorage.getItem("currentUser");
+    if (savedUser) {
+      setCurrentUser(JSON.parse(savedUser));
+      setLoading(false);
+    }
+  }, []);
 
   async function signup(email: string, password: string, name: string) {
     try {
@@ -35,6 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       const data = await response.json();
       console.log(data);
+      localStorage.setItem("currentUser", JSON.stringify(data));
       setCurrentUser(data);
     } catch (error) {
       throw error;
@@ -56,15 +72,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       const data = await response.json();
       console.log(data);
+      localStorage.setItem("currentUser", JSON.stringify(data));
       setCurrentUser(data);
     } catch (error) {
       throw error;
     }
   }
   function logout() {
+    localStorage.removeItem("currentUser");
     setCurrentUser(null);
   }
 
   const value: authContextType = { currentUser, signup, login, logout };
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {!loading && children}
+    </AuthContext.Provider>
+  );
 }

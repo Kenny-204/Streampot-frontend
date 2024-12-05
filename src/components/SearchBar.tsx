@@ -59,6 +59,7 @@ export function SearchBar({
         description: movie.overview,
         score: Math.round(movie.vote_average * 10),
       }));
+      localStorage.setItem('queriedMovies',JSON.stringify(editData))
       setQueriedMovies(editData);
       console.log(editData);
     } catch (e: any) {
