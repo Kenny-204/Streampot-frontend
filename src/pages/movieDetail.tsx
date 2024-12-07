@@ -4,7 +4,9 @@ import { DetailBox } from "./watchListDetails";
 import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
 // import { MovieList } from "../components/MovieList";
-import { movie, MovieList } from "../components/MovieList";
+import { movie
+  // , MovieList 
+} from "../components/MovieList";
 import { useNavigate } from "react-router-dom";
 import { PrevButton } from "../components/PrevButton";
 

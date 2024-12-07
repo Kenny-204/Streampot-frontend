@@ -9,18 +9,13 @@ import { Loader } from "./Loader";
 interface watchListItem {
   id: number;
   name: string;
-  year?: string;
-  poster?: string;
+  
   description: string;
   score?: number;
   image?: string;
 }
 
-function SideNav({
-  // setCurrentWatchListId,
-}: {
-  // setCurrentWatchListId: Function;
-}) {
+function SideNav() {
   const [watchList, setWatchList] = useState<watchListItem[]>();
   const [loading, setLoading] = useState(false);
 
@@ -104,7 +99,7 @@ function SideNav({
               title={watchlistItem.name}
               image={watchlistItem.image!}
               id={watchlistItem.id}
-              // setCurrentWatchListId={setCurrentWatchListId}
+          
             />
           ))
         )}

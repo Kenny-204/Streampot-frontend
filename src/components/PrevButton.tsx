@@ -4,7 +4,7 @@ const buttonStyle = {
   backgroundColor: "transparent",
   border: "none",
 };
-export function PrevButton({onClick}) {
+export function PrevButton({onClick}:any) {
 
   return (
     <button style={buttonStyle} onClick={onClick} >
