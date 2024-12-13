@@ -1,22 +1,22 @@
 import { useState } from "react";
-import HomePage from "../pages/homePage";
-import Layout from "../layout/layout";
-import CreateWatchList from "../pages/CreateWatchList";
+import HomePage from "./pages/homePage";
+import Layout from "./layout/layout";
+import CreateWatchList from "./pages/CreateWatchList";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
-import UserLoginPage from "../pages/UserLoginPage";
-import NotFoundPage from "../pages/NotFoundPage";
-import EditWatchList from "../pages/editWatchList";
-import History from "../pages/history";
-import UserSignUp from "../pages/userSignup";
-import WatchListDetail from "../pages/watchListDetails";
-import MovieDetail from "../pages/movieDetail";
-import { AuthProvider } from "../contexts/authContext";
+import UserLoginPage from "./pages/UserLoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import EditWatchList from "./pages/editWatchList";
+import History from "./pages/history";
+import UserSignUp from "./pages/userSignup";
+import WatchListDetail from "./pages/watchListDetails";
+import MovieDetail from "./pages/movieDetail";
+import { AuthProvider } from "./contexts/authContext";
 
-import { movie } from "./MovieList";
+import { movie } from "./components/MovieList";
 // import { tempMovieData } from "./Main";
-import ProfilePage from "../pages/profilePage";
-import StreamMovies from "../pages/streamMovies";
-import ProtectedRoute from "../contexts/protectedRoute";
+import ProfilePage from "./pages/profilePage";
+import StreamMovies from "./pages/streamMovies";
+import ProtectedRoute from "./contexts/protectedRoute";
 
 
 
