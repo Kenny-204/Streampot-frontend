@@ -8,7 +8,7 @@ import { movie
   // , MovieList 
 } from "../components/MovieList";
 import { useNavigate } from "react-router-dom";
-import { PrevButton } from "../components/PrevButton";
+// import { PrevButton } from "../components/PrevButton";
 
 interface MovieDetailProps {
   currentMovie: number;
@@ -159,14 +159,14 @@ export default function MovieDetail({
         <RenderError message={error} />
       ) : (
         <div>
-          <PrevButton
+          {/* <PrevButton
             onClick={() => {
               navigate(-1);
               setQueriedMovies(
                 JSON.parse(localStorage.getItem("queriedMovies") || "[]")
               );
             }}
-          />
+          /> */}
           <div className="movie-details-container flex">
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
