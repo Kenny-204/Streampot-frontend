@@ -20,106 +20,80 @@ import ProtectedRoute from "../contexts/protectedRoute";
 
 
 
+
 function App() {
   const [queriedMovies, setQueriedMovies] = useState<movie[]>([]);
-  // const [currentWatchListId, setCurrentWatchListId] = useState<number>(Number);
-  const [currentMovie, setCurrentMovie] = useState<number>(Number);
-  const [streaming, setStreaming] = useState<number>(Number);
-
+  const [currentMovie, setCurrentMovie] = useState<number>(0);
+  const [streaming, setStreaming] = useState<number>(0);
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: (
-        <Layout 
-        // watchList={watchList} 
-        // setCurrentWatchListId={setCurrentWatchListId}
-        >
-          <Outlet />
-        </Layout>
-      ),
+      element: <Layout />,
+      errorElement: <NotFoundPage />,
       children: [
         {
-          path: "/",
-          element: <HomePage setCurrentMovie={setCurrentMovie} setQueriedMovies={setQueriedMovies} queriedMovies={queriedMovies} />,
+          index: true,
+          element: <HomePage 
+            setCurrentMovie={setCurrentMovie} 
+            setQueriedMovies={setQueriedMovies} 
+            queriedMovies={queriedMovies} 
+          />,
         },
         {
-          path: "/",
-          element: (
-            <ProtectedRoute>
-              <Outlet />
-            </ProtectedRoute>
-          ),
+          element: <ProtectedRoute />,
           children: [
             {
-              path: "/createWatchlist",
-              element: (
-                <CreateWatchList
-                
-                  // setCurrentWatchListId={setCurrentWatchListId}
-                />
-              ),
+              path: "createWatchlist",
+              element: <CreateWatchList />,
             },
             {
-              path: "/editwatchlist",
+              path: "editwatchlist",
               element: <EditWatchList />,
             },
             {
-              path: "/history",
+              path: "history",
               element: <History setCurrentMovie={setCurrentMovie} />,
             },
             {
-              path: "/watchlistdetail/:id",
-              element: (
-                <WatchListDetail
-                  // currentWatchlistId={currentWatchListId}
-                  setCurrentMovie={setCurrentMovie}
-                />
-              ),
+              path: "watchlistdetail/:id",
+              element: <WatchListDetail setCurrentMovie={setCurrentMovie} />,
             },
-          
           ],
         },
         {
-          path: "/login",
+          path: "login",
           element: <UserLoginPage />,
         },
-
         {
-          path: "/signup",
+          path: "signup",
           element: <UserSignUp />,
         },
         {
-          path: "/moviedetail",
-          element: (
-            <MovieDetail
-              currentMovie={currentMovie}
-              setStreaming={setStreaming}
-              setQueriedMovies={setQueriedMovies}
-            />
-          ),
+          path: "moviedetail",
+          element: <MovieDetail
+            currentMovie={currentMovie}
+            setStreaming={setStreaming}
+            setQueriedMovies={setQueriedMovies}
+          />,
         },
         {
-          path: "/profilepage",
+          path: "profilepage",
           element: <ProfilePage />,
         },
         {
-          path: "/streammovie",
+          path: "streammovie",
           element: <StreamMovies streaming={streaming} />,
         },
       ],
-      errorElement: <NotFoundPage />,
     },
   ]);
 
   return (
-    <>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </>
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
-}
-
+        }
 
 export default App;
