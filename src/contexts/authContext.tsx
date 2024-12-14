@@ -31,8 +31,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const savedUser = localStorage.getItem("currentUser");
     if (savedUser) {
       setCurrentUser(JSON.parse(savedUser));
-      setLoading(false);
     }
+    setLoading(false);
   }, []);
 
   async function signup(email: string, password: string, name: string) {

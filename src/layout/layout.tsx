@@ -4,20 +4,13 @@ import SideNav from "../components/sideNav";
 
 interface Layout {
   children: ReactNode;
-  // setCurrentWatchListId: Function;
 }
 
-function Layout({
-  children,
-
-  // setCurrentWatchListId,
-}: Layout) {
+function Layout({ children }: Layout) {
   return (
     <>
       <div className="container flex">
-        <SideNav 
-        // setCurrentWatchListId={setCurrentWatchListId} 
-        />
+        <SideNav />
         <Main>{children}</Main>
       </div>
     </>
