@@ -15,7 +15,7 @@ interface watchListItem {
   image?: string;
 }
 
-function SideNav({display,name}: {display?:string,name?:string}) {
+function SideNav({display}: {display?:string}) {
   const [watchList, setWatchList] = useState<watchListItem[]>();
   const [loading, setLoading] = useState(false);
 
