@@ -15,7 +15,7 @@ interface watchListItem {
   image?: string;
 }
 
-function SideNav() {
+function SideNav({display,name}: {display?:string,name?:string}) {
   const [watchList, setWatchList] = useState<watchListItem[]>();
   const [loading, setLoading] = useState(false);
 
@@ -47,11 +47,12 @@ function SideNav() {
   );
 
   console.log(currentUser);
+  
   return (
-    <nav className="navbar ">
+    <nav className={`navbar ${display}`}>
       <ul className="nav-list">
         <li>
-          <h2 className="logo">StreamPot</h2>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
         </li>
 
         <li>

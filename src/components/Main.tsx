@@ -100,10 +100,11 @@ export const tempMovieData = [
 
 interface Main {
   children: ReactNode;
+  onClick:Function;
 }
 
-function Main({ children }: Main) {
-  return <main className="main">{children}</main>;
+function Main({ children,onClick }: Main) {
+  return <main className="main" onClick={()=>onClick()} >{children}</main>;
 }
 export function WelcomeSection() {
   return (
