@@ -240,7 +240,7 @@ header svg{
 }
 
 .movie-list .title {
-  font-size: 25px;
+  font-size: 20px;
   margin-bottom: 30px;
 }
 .movie-list li {
@@ -249,7 +249,8 @@ header svg{
   /* flex-grow: 1; */
 }
 .movie-list .movie {
-  width: 150px;
+  width: 120px;
+  flex-grow: 0.5;
   background-color: #1f1f1f;
   cursor: pointer;
   font-size: 16px;

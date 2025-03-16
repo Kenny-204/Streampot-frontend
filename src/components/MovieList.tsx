@@ -63,7 +63,7 @@ function Movie({ movie, setCurrentMovie }: MovieProps) {
   return (
     <li className="flex movie" onClick={handleSetCurrentMovie}>
       <BookMarkIcon />
-      <img src={movie.poster} alt={movie.title} width="150px" height="225px" />
+      <img src={movie.poster} alt={movie.title} width="100%" height="225px" />
       <div className="movie-details">
         <p className="movie-rating">{movie.score}/100</p>
         <p className="movie-title">
