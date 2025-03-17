@@ -63,7 +63,7 @@ header {
   justify-content: space-between;
   padding: 16px;
 }
-header svg{
+header svg {
   display: none;
 }
 /* Header end */
@@ -105,7 +105,6 @@ header svg{
   display: block;
 }
 
- 
 .navbar input {
   background-color: transparent;
   border: rgba(217, 217, 217, 0.3) 1px solid;
@@ -162,7 +161,7 @@ header svg{
   justify-content: space-between;
   display: flex;
 }
-.navbar .profile img{
+.navbar .profile img {
   border-radius: 50%;
 }
 .navbar .profile a {
@@ -170,7 +169,6 @@ header svg{
   width: auto;
   right: 5px;
 }
-
 
 /* navbar end */
 /* main start */
@@ -256,11 +254,11 @@ header svg{
   font-size: 16px;
   gap: 10px;
   position: relative;
-  transition :all 0.5 1s ease-in-out
+  transition: all 0.5 1s ease-in-out;
 }
 .movie-list .movie:hover {
   transform: translateY(-2px);
-/* background-color: red; */
+  /* background-color: red; */
 }
 
 .movie svg {
@@ -276,31 +274,30 @@ header svg{
   margin-bottom: 10px;
 }
 
-@media all and (max-width : 700px){
+@media all and (max-width: 700px) {
   /* .navbar, */
   /* .navbar, */
-header svg{
-  display:block;
+  header svg {
+    display: block;
+  }
+  .welcome {
+    display: none;
+  }
+  .navbar {
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    /* width: 50%; */
+  }
+  .main {
+    width: 100%;
+  }
+  .searchbar {
+    margin: 5px 0 20px 0;
+  }
 }
-.welcome{
-  display: none;
-}
-.navbar{
-  position:absolute;
-  background-color: black   ;
-  z-index: 1;
-  /* width: 50%; */
-}
-.main{
-  width: 100%;
-}
-.searchbar{
-  margin: 5px 0 20px 0;
-}
-
-} 
-@media all and (min-width : 700px){
-  .navbar{
+@media all and (min-width: 700px) {
+  .navbar {
     display: block;
   }
 }
@@ -333,8 +330,8 @@ header svg{
 }
 
 .create-watchlist button {
-  width: 20%;
-  padding: 10px 0 10px 10px;
+  width: fit-content;
+  padding: 10px;
 }
 
 /* create watchlist page end */
@@ -391,7 +388,7 @@ header svg{
   gap: 20px;
   margin-bottom: 5%;
 }
- .detail-box {
+.detail-box {
   background-color: rgba(217, 217, 217, 0.1);
   border: #a41b1b 1px solid;
   border-radius: 5px;
@@ -402,48 +399,60 @@ header svg{
   align-items: center;
 }
 
- .metric {
+.metric {
   font-size: 30px;
   color: #f33f3f;
 }
 /* watchlist detail end*/
 /* movie-details */
-.movie-details-container{
-
+.movie-details-container {
   /* flex-wrap: wrap; */
 }
-.movie-details{
+.movie-details {
   flex-direction: column;
   justify-content: space-between;
   padding: 10px 20px;
 }
-.movie-details h2,.movie-details h4{
+.movie-details h2,
+.movie-details h4 {
   padding: 5px 0;
 }
 .movie-details .buttons {
   align-items: center;
+  padding: 20px 0;
   gap: 30px;
 }
-.movie-details .movie-details-button{
+.movie-details .movie-details-button {
   padding: 15px 20px;
 }
-.cast-container{
-  margin: 2% 0 ;
+.cast-container {
+  margin: 2% 0;
 }
-.cast-container .cast-list{
+.cast-container .cast-list {
   gap: 3%;
   overflow-x: auto;
 }
-.cast-container .cast{
+.cast-container .cast {
   width: 150px;
-  color: #E1E1E1;
+  color: #e1e1e1;
   padding: 0 0 10px 0;
   background-color: #1f1f1f;
 }
-.cast .cast-name{
+.cast .cast-name {
   font-size: 16px;
 }
-.cast .cast-role{
+.cast .cast-role {
   font-size: 14px;
+}
+@media all and (max-width: 819px) {
+  .movie-details-container {
+    gap: 20px;
+    flex-direction: column;
+
+    place-items: center;
+  }
+  .movie-details-container img {
+    flex-grow: 0.5;
+  }
 }
 /* movie-details end */
