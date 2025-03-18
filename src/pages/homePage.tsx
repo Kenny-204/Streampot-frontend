@@ -6,6 +6,7 @@ import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
 import { movie } from "../components/MovieList";
 import { AUTH_BEARER } from "../config";
+import { useSearchParams } from "react-router-dom";
 
 // Define the movie interface
 interface Movie {
@@ -41,7 +42,8 @@ function HomePage({
 }: HomepageProps) {
   const [popularMoviesList, setPopularMoviesList] = useState<movie[]>([]);
 
-  const [query, setQuery] = useState<string>("");
+  const [searchparams,setSearchParams] = useSearchParams()
+  const [query, setQuery] = useState<string>(searchparams.get('query') || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -90,12 +92,13 @@ function HomePage({
         setError={setError}
         query={query}
         setQuery={setQuery}
+        setSearchParams={setSearchParams}
       />
       {loading ? (
         <Loader />
       ) : error ? (
         <RenderError message={error} />
-      ) : JSON.parse(localStorage.getItem('queriedMovies') || '[]').length === 0 ? (
+      ) : queriedMovies.length === 0 ? (
         <PopularMovies
           popularMoviesList={popularMoviesList}
           setCurrentMovie={setCurrentMovie}
@@ -133,7 +136,7 @@ function SearchResult({
   setCurrentMovie: Function;
 }) {
   return (
-    <MovieList list={JSON.parse(localStorage.getItem('queriedMovies') || '[]')} setCurrentMovie={setCurrentMovie}>
+    <MovieList list={queriedMovies} setCurrentMovie={setCurrentMovie}>
       <div className="title">
         <p>Showing {queriedMovies.length} results</p>
       </div>

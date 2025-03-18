@@ -405,9 +405,7 @@ header svg {
 }
 /* watchlist detail end*/
 /* movie-details */
-.movie-details-container {
-  /* flex-wrap: wrap; */
-}
+
 .movie-details {
   flex-direction: column;
   justify-content: space-between;

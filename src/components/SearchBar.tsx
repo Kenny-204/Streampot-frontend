@@ -1,5 +1,6 @@
 import { AUTH_BEARER } from "../config";
 import { movie } from "./MovieList";
+import { useEffect } from "react";
 
 // Define the movie interface
 interface Movie {
@@ -17,6 +18,7 @@ interface searchbar {
   setError: Function;
   query: string;
   setQuery: Function;
+  setSearchParams: Function;
 }
 
 export function SearchBar({
@@ -25,7 +27,13 @@ export function SearchBar({
   setQueriedMovies,
   setLoading,
   setError,
+  setSearchParams,
 }: searchbar) {
+  useEffect(function () {
+    if (query) {
+      handleSearchMovie(query);
+    }
+  }, []);
   async function handleSearchMovie(query: string) {
     try {
       const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`;
@@ -59,7 +67,7 @@ export function SearchBar({
         description: movie.overview,
         score: Math.round(movie.vote_average * 10),
       }));
-      localStorage.setItem('queriedMovies',JSON.stringify(editData))
+      // localStorage.setItem('queriedMovies',JSON.stringify(editData))
       setQueriedMovies(editData);
       console.log(editData);
     } catch (e: any) {
@@ -85,7 +93,10 @@ export function SearchBar({
           type="text"
           placeholder="Search for movie by title "
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setSearchParams({ query: e.target.value });
+          }}
         />
         <button>Search</button>
       </form>
