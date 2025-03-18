@@ -9,13 +9,19 @@ import { Loader } from "./Loader";
 interface watchListItem {
   id: number;
   name: string;
-  
+
   description: string;
   score?: number;
   image?: string;
 }
 
-function SideNav({display}: {display?:string}) {
+function SideNav({
+  display,
+  setQueriedMovies,
+}: {
+  display?: string;
+  setQueriedMovies: Function;
+}) {
   const [watchList, setWatchList] = useState<watchListItem[]>();
   const [loading, setLoading] = useState(false);
 
@@ -47,12 +53,25 @@ function SideNav({display}: {display?:string}) {
   );
 
   console.log(currentUser);
-  
+
   return (
     <nav className={`navbar ${display}`}>
       <ul className="nav-list">
         <li>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 6 6 18"></path>
+            <path d="m6 6 12 12"></path>
+          </svg>
         </li>
 
         <li>
@@ -61,9 +80,9 @@ function SideNav({display}: {display?:string}) {
         <li>
           <NavLink
             to="/"
-            // onClick={() => {
-            //   localStorage.clear();
-            // }}
+            onClick={() => {
+              setQueriedMovies([]);
+            }}
           >
             {" "}
             <HouseIcon /> Home
@@ -100,7 +119,6 @@ function SideNav({display}: {display?:string}) {
               title={watchlistItem.name}
               image={watchlistItem.image!}
               id={watchlistItem.id}
-          
             />
           ))
         )}
@@ -152,8 +170,8 @@ function WatchListItem({
   // image,
   title,
   id,
-  // setCurrentWatchListId,
-}: watchListItemProps) {
+}: // setCurrentWatchListId,
+watchListItemProps) {
   return (
     <li>
       <NavLink

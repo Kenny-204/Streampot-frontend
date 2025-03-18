@@ -28,7 +28,7 @@ import { AuthProvider } from "./contexts/authContext";
      {
        path: "/",
        element: (
-         <Layout>
+         <Layout setQueriedMovies={setQueriedMovies} >
            <Outlet />
          </Layout>
        ),

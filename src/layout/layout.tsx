@@ -5,9 +5,10 @@ import { Close, Hamburger } from "../components/Icons";
 
 interface Layout {
   children: ReactNode;
+  setQueriedMovies:Function;
 }
 
-function Layout({ children }: Layout) {
+function Layout({ children,setQueriedMovies }: Layout) {
   const [isNavOpen, setIsNavOpen] = useState(false);
   function toggleNav() {
     setIsNavOpen((isNavOpen) => !isNavOpen);
@@ -21,7 +22,7 @@ function Layout({ children }: Layout) {
         {isNavOpen ? <Close onClick={()=>toggleNav()}/> : <Hamburger onClick={() => toggleNav()} />}
       </header>
       <div className="container flex">
-        <SideNav display={isNavOpen ? "" : "hidden"} />
+        <SideNav display={isNavOpen ? "" : "hidden"} setQueriedMovies={setQueriedMovies} />
         <Main
           onClick={() => {
             setIsNavOpen(false);
