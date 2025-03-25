@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { API_URL } from "../config";
+
 
 export default function StreamMovies() {
     const {currentStream} = useParams()
