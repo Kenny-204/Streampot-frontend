@@ -9,7 +9,7 @@ export default function StreamMovies() {
         width="100%"
         height="250px"
         title="Streaming..."
-        src={` ${API_URL}/proxy/?video_id=${currentStream}`}
+        src={`https://multiembed.mov/?video_id=${currentStream}`}
         ></iframe>
      
       <p>Your movie is now streaming</p>

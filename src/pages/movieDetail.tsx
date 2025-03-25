@@ -147,11 +147,7 @@ export default function MovieDetail() {
         <RenderError message={error} />
       ) : (
         <div>
-          <PrevButton
-            onClick={() => {
-              navigate(-1);
-            }}
-          />
+          <PrevButton />
           <div className="movie-details-container flex">
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
