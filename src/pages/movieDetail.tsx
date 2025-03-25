@@ -3,18 +3,9 @@ import { Button } from "../components/Button";
 import { DetailBox } from "./watchListDetails";
 import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
-// import { MovieList } from "../components/MovieList";
-import { movie
-  // , MovieList 
-} from "../components/MovieList";
-import { useNavigate } from "react-router-dom";
+import { movie } from "../components/MovieList";
+import { useNavigate, useParams } from "react-router-dom";
 import { PrevButton } from "../components/PrevButton";
-
-interface MovieDetailProps {
-  currentMovie: number;
-  setStreaming: Function;
-  setQueriedMovies: Function;
-}
 
 interface movieDetail {
   title: string;
@@ -51,17 +42,14 @@ export function minutesToHours(minutes: any) {
   return `${convertHour}h ${convertMinutes}m`;
 }
 
-export default function MovieDetail({
-  currentMovie,
-  setStreaming,
-  setQueriedMovies,
-}: MovieDetailProps) {
+export default function MovieDetail() {
   const [movie, setMovie] = useState<movieDetail>(newMovie);
   const [credits, setCredits] = useState<credit[]>([]);
   const [similarMovies, setSimilarMovies] = useState<movie[]>(Object);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { currentMovie } = useParams();
 
   const movieDataUrl = `https://api.themoviedb.org/3/movie/${currentMovie}?language=en-US`;
   const similarMoviesUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/similar`;
@@ -110,7 +98,7 @@ export default function MovieDetail({
         };
         console.log(newMovie);
         setMovie(newMovie);
-        setStreaming(newMovie.imdbId);
+
         // edit credits data
         const movieCreditsEdit = creditsData.cast.map((credit: any) => ({
           profileImg: credit.profile_path,
@@ -148,7 +136,7 @@ export default function MovieDetail({
   console.log(similarMovies);
 
   function HandleClickStream() {
-    navigate("/streammovie");
+    navigate(`/streammovie/${currentMovie}`);
   }
 
   return (
@@ -159,14 +147,11 @@ export default function MovieDetail({
         <RenderError message={error} />
       ) : (
         <div>
-           <PrevButton
+          <PrevButton
             onClick={() => {
               navigate(-1);
-              setQueriedMovies(
-                JSON.parse(localStorage.getItem("queriedMovies") || "[]")
-              );
             }}
-          /> 
+          />
           <div className="movie-details-container flex">
             <img
               src={`https://image.tmdb.org/t/p/w500${movie.poster}`}

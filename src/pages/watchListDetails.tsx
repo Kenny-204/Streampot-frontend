@@ -9,7 +9,7 @@ import { Loader } from "../components/Loader";
 interface CurrentWatchList {
   title: string;
   description: string;
-  items: any[]; // Changed from never[] to allow any type of items
+  items: any[]; 
 }
 
 interface DetailBoxProps {
@@ -17,13 +17,7 @@ interface DetailBoxProps {
   metric: string | number;
 }
 
-function WatchListDetail({
-  // currentWatchlistId,
-  setCurrentMovie,
-}: {
-  // currentWatchlistId: number;
-  setCurrentMovie: Function;
-}) {
+function WatchListDetail() {
   
   const [currentWatchlist, setCurrentWatchList] = useState<CurrentWatchList>({
     title: "",
@@ -75,7 +69,7 @@ function WatchListDetail({
   const averageScore = Math.trunc(totalScore / totalMovies);
 
   return (
-    // {loading || <Loader/>}
+ 
     loading ? (
       <Loader />
     ) : (
@@ -92,7 +86,7 @@ function WatchListDetail({
         ) : (
           <MovieList
             list={currentWatchlist.items}
-            setCurrentMovie={setCurrentMovie}
+           
           >
             <div className="list-details flex">
               <DetailBox title="ITEMS ON LIST" metric={totalMovies || 0} />

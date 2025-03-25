@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 interface movieList {
   children: ReactNode;
   list: movie[];
-  setCurrentMovie?: Function;
 }
 
 
@@ -24,8 +23,8 @@ export interface movie {
 
 export function MovieList({
   children,
-  list ,
-  setCurrentMovie,
+  list 
+  
 }: movieList) {
 
   return (
@@ -36,7 +35,7 @@ export function MovieList({
           <Movie
             movie={movie}
             key={i}
-            setCurrentMovie={setCurrentMovie!}
+          
           />
         ))}
       </ul>
@@ -48,17 +47,13 @@ export function MovieList({
   );
 }
 
-interface MovieProps {
-  movie: movie;
-  setCurrentMovie: Function;
-}
 
-function Movie({ movie, setCurrentMovie }: MovieProps) {
+function Movie({ movie }: {movie:movie}) {
   const navigate = useNavigate();
 
   function handleSetCurrentMovie() {
-    setCurrentMovie(movie.id);
-    navigate("/moviedetail");
+    
+    navigate(`/moviedetail/${movie.id}`);
   }
   return (
     <li className="flex movie" onClick={handleSetCurrentMovie}>

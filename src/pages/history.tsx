@@ -1,10 +1,10 @@
 import { tempMovieData } from "../components/Main"
 import { MovieList } from "../components/MovieList"
 
-function History({setCurrentMovie}:{setCurrentMovie:Function}){
+function History(){
  return <>
  
- <MovieList list={tempMovieData} setCurrentMovie={setCurrentMovie} >
+ <MovieList list={tempMovieData}  >
     <a href="#" style={{color:'red',position:'absolute',right:'6%',top:'3%'}} >Clear history</a>
  </MovieList>
  </>   

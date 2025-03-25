@@ -19,7 +19,6 @@ interface Movie {
 }
 
 interface HomepageProps {
-  setCurrentMovie: Function;
   setQueriedMovies: Function;
   queriedMovies: movie[];
 }
@@ -35,15 +34,11 @@ const options = {
   },
 };
 
-function HomePage({
-  setCurrentMovie,
-  setQueriedMovies,
-  queriedMovies,
-}: HomepageProps) {
+function HomePage({ setQueriedMovies, queriedMovies }: HomepageProps) {
   const [popularMoviesList, setPopularMoviesList] = useState<movie[]>([]);
 
-  const [searchparams,setSearchParams] = useSearchParams()
-  const [query, setQuery] = useState<string>(searchparams.get('query') || '');
+  const [searchparams, setSearchParams] = useSearchParams();
+  const [query, setQuery] = useState<string>(searchparams.get("query") || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -99,28 +94,16 @@ function HomePage({
       ) : error ? (
         <RenderError message={error} />
       ) : queriedMovies.length === 0 ? (
-        <PopularMovies
-          popularMoviesList={popularMoviesList}
-          setCurrentMovie={setCurrentMovie}
-        />
+        <PopularMovies popularMoviesList={popularMoviesList} />
       ) : (
-        <SearchResult
-          queriedMovies={queriedMovies}
-          setCurrentMovie={setCurrentMovie}
-        />
+        <SearchResult queriedMovies={queriedMovies} />
       )}
     </>
   );
 }
-function PopularMovies({
-  popularMoviesList,
-  setCurrentMovie,
-}: {
-  popularMoviesList: movie[];
-  setCurrentMovie: Function;
-}) {
+function PopularMovies({ popularMoviesList }: { popularMoviesList: movie[] }) {
   return (
-    <MovieList list={popularMoviesList} setCurrentMovie={setCurrentMovie}>
+    <MovieList list={popularMoviesList}>
       <div className="title">
         <p>Popular movies right now</p>
       </div>
@@ -128,15 +111,9 @@ function PopularMovies({
   );
 }
 
-function SearchResult({
-  queriedMovies,
-  setCurrentMovie,
-}: {
-  queriedMovies: movie[];
-  setCurrentMovie: Function;
-}) {
+function SearchResult({ queriedMovies }: { queriedMovies: movie[] }) {
   return (
-    <MovieList list={queriedMovies} setCurrentMovie={setCurrentMovie}>
+    <MovieList list={queriedMovies}>
       <div className="title">
         <p>Showing {queriedMovies.length} results</p>
       </div>
