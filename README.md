@@ -30,7 +30,7 @@
 
 ```sh
 # Clone the repository
-git clone https://github.com/Kenny-204/StreamPot.git
+git clone https://github.com/Kenny-204/StreamPot-frontend.git
 cd StreamPot
 
 # Install dependencies
