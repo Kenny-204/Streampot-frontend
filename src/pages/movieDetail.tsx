@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PrevButton } from "../components/PrevButton";
 
 interface movieDetail {
+  imdbId:string,
   title: string;
   score: number;
   runtime: number;
@@ -25,6 +26,7 @@ interface credit {
 }
 
 const newMovie = {
+  imdbId:"",
   title: "title",
   score: 10,
   runtime: 90,
@@ -136,7 +138,7 @@ export default function MovieDetail() {
   console.log(similarMovies);
 
   function HandleClickStream() {
-    navigate(`/streammovie/${currentMovie}`);
+    navigate(`/streammovie/${movie.imdbId}`);
   }
 
   return (
