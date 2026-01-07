@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { useAuth } from "../contexts/authContext";
 import { API_URL } from "../utils/config";
 import { Loader } from "../components/Loader";
 import authFetch from "../utils/authFetch";
+import { RenderError } from "../components/Error";
 
 function CreateWatchList({
   setRefetch,
@@ -12,6 +12,8 @@ function CreateWatchList({
   setRefetch: Dispatch<SetStateAction<boolean>>;
 }) {
   // { setCurrentWatchListId }:{setCurrentWatchListId:Function}
+  const [error, setError] = useState("");
+
   const [watchListName, setWatchlistName] = useState("");
   const [watchListDescription, setWatchlistDescription] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,6 +26,8 @@ function CreateWatchList({
     if (!watchListName || !watchListDescription) return;
     try {
       setLoading(true);
+      setError("");
+
       const response = await authFetch(`${API_URL}/watchlists/`, {
         method: "POST",
         headers: { "content-type": "application/json" },
@@ -32,25 +36,18 @@ function CreateWatchList({
           description: watchListDescription,
         }),
       });
-      //  fetch(`${API_URL}/watchlists/`, {
-      //   method: "POST",
-      //   headers: { "content-type": "application/json" },
-      //   body: JSON.stringify({
-      //     name: watchListName,
-      //     description: watchListDescription,
-      //     userId: "user001",
-      //   }),
-      // });
+
       const data = await response.json();
       setLoading(false);
       console.log(data);
-      // setCurrentWatchListId(data.id);
       if (data.status === "success") {
         setRefetch((refetch) => !refetch);
         navigate(`/watchlistdetail/${data.data._id}`);
       }
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
     }
   }
 
@@ -68,6 +65,8 @@ function CreateWatchList({
           <p role="heading" aria-level={1}>
             Create a new Watchlist
           </p>
+          {error && <RenderError message={error} />}
+
           <label htmlFor="watchlist-title"> Name</label>
           <input
             type="text"

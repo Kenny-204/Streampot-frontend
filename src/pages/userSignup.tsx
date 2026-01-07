@@ -28,12 +28,12 @@ function UserSignUp() {
     try {
       setLoading(true);
       setError("");
-      await signup(email, password,passwordConfirm, name);
+      await signup(email, password, passwordConfirm, name);
       navigate("/");
-    } catch (error: any) {
-      console.log(error);
-      console.log(error.message);
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
     } finally {
       setLoading(false);
     }

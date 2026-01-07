@@ -29,7 +29,7 @@ function SideNav({
   const [watchList, setWatchList] = useState<watchListItem[]>();
   const [loading, setLoading] = useState(false);
 
-  const {currentUser} = useAuth();
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   useEffect(
     function () {
@@ -40,8 +40,10 @@ function SideNav({
             const response = await authFetch(`${API_URL}/watchlists`);
             const data = await response.json();
             setWatchList(data.data);
-          } catch (error: any) {
-            console.log(error.message);
+          } catch (error: unknown) {
+            if (error instanceof Error) {
+              console.log(error.message);
+            }
           } finally {
             setLoading(false);
           }
@@ -179,7 +181,11 @@ watchListItemProps) {
         className="watchList-item"
         // onClick={() => setCurrentWatchListId(id)}
       >
-        <img src={`https://i.pravatar.cc/48?u=${id}`} alt="profile pic" width="30px" />
+        <img
+          src={`https://i.pravatar.cc/48?u=${id}`}
+          alt="profile pic"
+          width="30px"
+        />
         <p>{title}</p>
       </NavLink>
     </li>

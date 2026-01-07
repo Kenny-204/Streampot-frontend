@@ -1,16 +1,15 @@
 import { Link, useParams } from "react-router-dom";
-import { MovieList } from "../components/MovieList";
+import { movie, MovieList } from "../components/MovieList";
 import { minutesToHours } from "./movieDetail";
 import { useEffect, useState } from "react";
 import { API_URL } from "../utils/config";
-import { tempMovieData } from "../components/Main";
 import { Loader } from "../components/Loader";
 import authFetch from "../utils/authFetch";
 
 interface CurrentWatchList {
   title: string;
   description: string;
-  items: any[]; 
+  items: movie[];
 }
 
 interface DetailBoxProps {
@@ -19,14 +18,13 @@ interface DetailBoxProps {
 }
 
 function WatchListDetail() {
-  
   const [currentWatchlist, setCurrentWatchList] = useState<CurrentWatchList>({
     title: "",
     description: "",
     items: [],
   });
   const [loading, setLoading] = useState(false);
-  const { id:currentWatchlistId } = useParams();
+  const { id: currentWatchlistId } = useParams();
 
   useEffect(
     function () {
@@ -45,8 +43,10 @@ function WatchListDetail() {
           console.log(data);
           console.log(newWatchlList);
           setCurrentWatchList(newWatchlList);
-        } catch (error: any) {
-          console.log(error.message);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            console.log(error.message);
+          }
         } finally {
           setLoading(false);
         }
@@ -59,7 +59,7 @@ function WatchListDetail() {
   console.log(currentWatchlist);
   console.log(loading);
   const totalRuntime = currentWatchlist.items
-    ?.map((movie) => movie.runtime)
+    ?.map((movie) => movie.runtime!)
     .reduce((a, b) => a + b, 0);
 
   const hours = minutesToHours(totalRuntime);
@@ -69,35 +69,29 @@ function WatchListDetail() {
   }, 0);
   const averageScore = Math.trunc(totalScore / totalMovies);
 
-  return (
- 
-    loading ? (
-      <Loader />
-    ) : (
-      <section className="watchlist-detail">
-        <p className="header">{currentWatchlist.title}</p>
-        <p>About this watchlist</p>
-        <p className="list-description">{currentWatchlist.description}</p>
+  return loading ? (
+    <Loader />
+  ) : (
+    <section className="watchlist-detail">
+      <p className="header">{currentWatchlist.title}</p>
+      <p>About this watchlist</p>
+      <p className="list-description">{currentWatchlist.description}</p>
 
-        {totalMovies === 0 ? (
-          <p>
-            You currently do not have any movies here... go and add some{" "}
-            <Link to="/">Here</Link>{" "}
-          </p>
-        ) : (
-          <MovieList
-            list={currentWatchlist.items}
-           
-          >
-            <div className="list-details flex">
-              <DetailBox title="ITEMS ON LIST" metric={totalMovies || 0} />
-              <DetailBox title="UNWATCHED RUNTIME" metric={hours} />
-              <DetailBox title="AVERAGE SCORE" metric={averageScore} />
-            </div>
-          </MovieList>
-        )}
-      </section>
-    )
+      {totalMovies === 0 ? (
+        <p>
+          You currently do not have any movies here... go and add some{" "}
+          <Link to="/">Here</Link>{" "}
+        </p>
+      ) : (
+        <MovieList list={currentWatchlist.items}>
+          <div className="list-details flex">
+            <DetailBox title="ITEMS ON LIST" metric={totalMovies || 0} />
+            <DetailBox title="UNWATCHED RUNTIME" metric={hours} />
+            <DetailBox title="AVERAGE SCORE" metric={averageScore} />
+          </div>
+        </MovieList>
+      )}
+    </section>
   );
 }
 

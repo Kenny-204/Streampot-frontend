@@ -1,6 +1,6 @@
 export default async function authFetch(
   url: string,
-  options = { headers: {} }
+  options = { headers: {} ,method:"",body:''}
 ) {
   const token = localStorage.getItem("token");
   return fetch(url, {
