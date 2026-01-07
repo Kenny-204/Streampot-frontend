@@ -1,4 +1,4 @@
-import { AUTH_BEARER } from "../config";
+import { AUTH_BEARER } from "../utils/config";
 import { movie } from "./MovieList";
 import { useEffect } from "react";
 

@@ -20,11 +20,12 @@ import ProtectedRoute from "./contexts/protectedRoute";
 
 function App() {
   const [queriedMovies, setQueriedMovies] = useState<movie[]>([]);
+  const [refetch, setRefetch] = useState(false);
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
-        <Layout setQueriedMovies={setQueriedMovies}>
+        <Layout refetch={refetch} setQueriedMovies={setQueriedMovies}>
           <Outlet />
         </Layout>
       ),
@@ -48,7 +49,7 @@ function App() {
           children: [
             {
               path: "/createWatchlist",
-              element: <CreateWatchList />,
+              element: <CreateWatchList setRefetch={setRefetch} />,
             },
             {
               path: "/editwatchlist",

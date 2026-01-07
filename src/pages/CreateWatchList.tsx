@@ -1,38 +1,54 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
-import { FormEvent, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import { useAuth } from "../contexts/authContext";
-import { API_URL } from "../config";
+import { API_URL } from "../utils/config";
 import { Loader } from "../components/Loader";
+import authFetch from "../utils/authFetch";
 
-function CreateWatchList() {
+function CreateWatchList({
+  setRefetch,
+}: {
+  setRefetch: Dispatch<SetStateAction<boolean>>;
+}) {
   // { setCurrentWatchListId }:{setCurrentWatchListId:Function}
   const [watchListName, setWatchlistName] = useState("");
   const [watchListDescription, setWatchlistDescription] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { currentUser } = useAuth();
+  // const { currentUser } = useAuth();
 
   async function createWatchlist(e: FormEvent) {
     e.preventDefault();
     if (!watchListName || !watchListDescription) return;
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/watchlist/create`, {
+      const response = await authFetch(`${API_URL}/watchlists/`, {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
           name: watchListName,
           description: watchListDescription,
-          userId: currentUser.id,
         }),
       });
+      //  fetch(`${API_URL}/watchlists/`, {
+      //   method: "POST",
+      //   headers: { "content-type": "application/json" },
+      //   body: JSON.stringify({
+      //     name: watchListName,
+      //     description: watchListDescription,
+      //     userId: "user001",
+      //   }),
+      // });
       const data = await response.json();
       setLoading(false);
       console.log(data);
       // setCurrentWatchListId(data.id);
-      navigate(`/watchlistdetail/${data.id}`);
+      if (data.status === "success") {
+        setRefetch((refetch) => !refetch);
+        navigate(`/watchlistdetail/${data.data._id}`);
+      }
     } catch (error: any) {
       console.log(error.message);
     }

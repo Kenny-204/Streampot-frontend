@@ -1,14 +1,16 @@
-import { ReactNode, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, useState } from "react";
 import Main from "../components/Main";
 import SideNav from "../components/sideNav";
 import { Close, Hamburger } from "../components/Icons";
+import { movie } from "../components/MovieList";
 
 interface Layout {
   children: ReactNode;
-  setQueriedMovies:Function;
+  refetch:boolean;
+  setQueriedMovies:Dispatch<SetStateAction<movie[]>>;
 }
 
-function Layout({ children,setQueriedMovies }: Layout) {
+function Layout({ children,setQueriedMovies,refetch }: Layout) {
   const [isNavOpen, setIsNavOpen] = useState(false);
   function toggleNav() {
     setIsNavOpen((isNavOpen) => !isNavOpen);
@@ -22,7 +24,7 @@ function Layout({ children,setQueriedMovies }: Layout) {
         {isNavOpen ? <Close onClick={()=>toggleNav()}/> : <Hamburger onClick={() => toggleNav()} />}
       </header>
       <div className="container flex">
-        <SideNav display={isNavOpen ? "" : "hidden"} setQueriedMovies={setQueriedMovies} />
+        <SideNav display={isNavOpen ? "" : "hidden"} refetch={refetch} setQueriedMovies={setQueriedMovies} />
         <Main
           onClick={() => {
             setIsNavOpen(false);

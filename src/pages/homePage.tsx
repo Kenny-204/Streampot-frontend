@@ -5,7 +5,7 @@ import { MovieList } from "../components/MovieList";
 import { Loader } from "../components/Loader";
 import { RenderError } from "../components/Error";
 import { movie } from "../components/MovieList";
-import { AUTH_BEARER } from "../config";
+import { AUTH_BEARER } from "../utils/config";
 import { useSearchParams } from "react-router-dom";
 
 // Define the movie interface

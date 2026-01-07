@@ -11,6 +11,7 @@ function UserSignUp() {
   const [email, setEmail] = useState("");
   const [name, setname] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -27,7 +28,7 @@ function UserSignUp() {
     try {
       setLoading(true);
       setError("");
-      await signup(email, password, name);
+      await signup(email, password,passwordConfirm, name);
       navigate("/");
     } catch (error: any) {
       console.log(error);
@@ -78,6 +79,13 @@ function UserSignUp() {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          />
+          <label htmlFor="password">Confirm Password*</label>
+          <input
+            type="text"
+            name="passwordConfirm"
+            value={passwordConfirm}
+            onChange={(e) => setPasswordConfirm(e.target.value)}
           />
           <Button disabled={loading} type="submit">
             Create Profile

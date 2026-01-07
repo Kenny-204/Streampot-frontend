@@ -2,12 +2,14 @@ import { Button } from "./Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { HouseIcon, HistoryIcon, PlusIcon, Ellipsis } from "./Icons";
 import { useAuth } from "../contexts/authContext";
-import { API_URL } from "../config";
-import { useEffect, useState } from "react";
+import { API_URL } from "../utils/config";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Loader } from "./Loader";
+import { movie } from "./MovieList";
+import authFetch from "../utils/authFetch";
 
 interface watchListItem {
-  id: number;
+  _id: number;
   name: string;
 
   description: string;
@@ -17,15 +19,17 @@ interface watchListItem {
 
 function SideNav({
   display,
+  refetch,
   setQueriedMovies,
 }: {
+  refetch: boolean;
   display?: string;
-  setQueriedMovies: Function;
+  setQueriedMovies: Dispatch<SetStateAction<movie[]>>;
 }) {
   const [watchList, setWatchList] = useState<watchListItem[]>();
   const [loading, setLoading] = useState(false);
 
-  const { currentUser } = useAuth();
+  const {currentUser} = useAuth();
   const navigate = useNavigate();
   useEffect(
     function () {
@@ -33,11 +37,9 @@ function SideNav({
         async function getWatchList() {
           try {
             setLoading(true);
-            const response = await fetch(
-              `${API_URL}/watchlist/user/${currentUser.id}`
-            );
+            const response = await authFetch(`${API_URL}/watchlists`);
             const data = await response.json();
-            setWatchList(data);
+            setWatchList(data.data);
           } catch (error: any) {
             console.log(error.message);
           } finally {
@@ -49,10 +51,8 @@ function SideNav({
         setWatchList([]);
       }
     },
-    [currentUser]
+    [currentUser, refetch]
   );
-
-  console.log(currentUser);
 
   return (
     <nav className={`navbar ${display}`}>
@@ -65,9 +65,9 @@ function SideNav({
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           >
             <path d="M18 6 6 18"></path>
             <path d="m6 6 12 12"></path>
@@ -118,7 +118,7 @@ function SideNav({
               key={i}
               title={watchlistItem.name}
               image={watchlistItem.image!}
-              id={watchlistItem.id}
+              id={watchlistItem._id}
             />
           ))
         )}
@@ -131,7 +131,7 @@ function SideNav({
                 style={{ alignItems: "center", gap: "5px" }}
               >
                 <img
-                  src={`https://i.pravatar.cc/48?u=${currentUser.id}`}
+                  src={`https://i.pravatar.cc/48?u=${currentUser._id}`}
                   alt={currentUser.name}
                   width="30px"
                 />
@@ -179,7 +179,7 @@ watchListItemProps) {
         className="watchList-item"
         // onClick={() => setCurrentWatchListId(id)}
       >
-        <img src="32.webp" alt="profile pic" width="30px" />
+        <img src={`https://i.pravatar.cc/48?u=${id}`} alt="profile pic" width="30px" />
         <p>{title}</p>
       </NavLink>
     </li>

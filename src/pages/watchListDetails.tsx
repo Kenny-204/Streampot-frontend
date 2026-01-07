@@ -2,9 +2,10 @@ import { Link, useParams } from "react-router-dom";
 import { MovieList } from "../components/MovieList";
 import { minutesToHours } from "./movieDetail";
 import { useEffect, useState } from "react";
-import { API_URL } from "../config";
+import { API_URL } from "../utils/config";
 import { tempMovieData } from "../components/Main";
 import { Loader } from "../components/Loader";
+import authFetch from "../utils/authFetch";
 
 interface CurrentWatchList {
   title: string;
@@ -32,14 +33,14 @@ function WatchListDetail() {
       async function getCurrentWatchList() {
         try {
           setLoading(true);
-          const response = await fetch(
-            `${API_URL}/watchlist/${currentWatchlistId}`
+          const response = await authFetch(
+            `${API_URL}/watchlists/${currentWatchlistId}`
           );
           const data = await response.json();
           const newWatchlList = {
-            title: data.name,
-            description: data.description,
-            items: tempMovieData,
+            title: data.data.name,
+            description: data.data.description,
+            items: data.data.movies,
           };
           console.log(data);
           console.log(newWatchlList);
