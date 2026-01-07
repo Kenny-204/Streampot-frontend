@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PrevButton } from "../components/PrevButton";
 
 interface movieDetail {
-  imdbId:string,
+  imdbId: string;
   title: string;
   score: number;
   runtime: number;
@@ -26,7 +26,7 @@ interface credit {
 }
 
 const newMovie = {
-  imdbId:"",
+  imdbId: "",
   title: "title",
   score: 10,
   runtime: 90,
@@ -36,7 +36,7 @@ const newMovie = {
   genre: ["data.genres.map((genre) => genre.name)"],
 };
 
-export function minutesToHours(minutes: any) {
+export function minutesToHours(minutes: number) {
   const hour = Math.trunc(minutes / 60);
   const minute = Math.trunc(minutes % 60);
   const convertHour = hour < 10 ? `0${hour}` : `${hour}`;
@@ -96,37 +96,55 @@ export default function MovieDetail() {
           year: movieData.release_date.slice(0, 4),
           poster: movieData.poster_path,
           description: movieData.overview,
-          genre: movieData.genres.map((genre: any) => genre.name),
+          genre: movieData.genres.map((genre: { name: string }) => genre.name),
         };
         console.log(newMovie);
         setMovie(newMovie);
 
         // edit credits data
-        const movieCreditsEdit = creditsData.cast.map((credit: any) => ({
-          profileImg: credit.profile_path,
-          name: credit.name,
-          character: credit.character,
-          id: credit.id,
-        }));
+        const movieCreditsEdit = creditsData.cast.map(
+          (credit: {
+            profile_path: string | null;
+            name: string;
+            character: string;
+            id: number;
+          }) => ({
+            profileImg: credit.profile_path,
+            name: credit.name,
+            character: credit.character,
+            id: credit.id,
+          })
+        );
         setCredits(movieCreditsEdit);
         console.log(movieCreditsEdit);
 
         // edit similar movies
         const similarMoviesEdit = similarMoviesData.results
           .slice(0, 10)
-          .map((movie: any) => ({
-            id: movie.id,
-            Title: movie.title,
-            Year: movie.release_date,
-            Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-            description: movie.overview,
-            score: Math.round(movie.vote_average * 10),
-          }));
+          .map(
+            (movie: {
+              id: number;
+              title: string;
+              release_date: string;
+              poster_path: string | null;
+              overview: string;
+              vote_average: number;
+            }) => ({
+              id: movie.id,
+              Title: movie.title,
+              Year: movie.release_date,
+              Poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+              description: movie.overview,
+              score: Math.round(movie.vote_average * 10),
+            })
+          );
         setSimilarMovies(similarMoviesEdit);
         // console.log(similarMoviesData.results);
-      } catch (error: any) {
-        console.log(error.message);
-        setError(error.message);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.log(error.message);
+          setError(error.message);
+        }
       } finally {
         setLoading(false);
       }
