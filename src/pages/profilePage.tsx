@@ -3,16 +3,19 @@ import { LoginForm } from "./UserLoginPage";
 import { useAuth } from "../contexts/authContext";
 import { useNavigate } from "react-router-dom";
 import { FormEvent } from "react";
+import { Loader } from "../components/Loader";
 
 export default function ProfilePage() {
   const { currentUser, logout } = useAuth();
-  const { email, name, id } = currentUser;
   const navigate = useNavigate();
 
   function handleLogout(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     logout();
     navigate("/");
+  }
+  if(!currentUser){
+    return <Loader/>
   }
 
   return (
@@ -26,7 +29,7 @@ export default function ProfilePage() {
           }}
         >
           <img
-            src={`https://i.pravatar.cc/48?u=${id}`}
+            src={`https://i.pravatar.cc/48?u=${currentUser._id}`}
             alt="user-pic"
             width="100px"
             height="100px"
@@ -37,11 +40,11 @@ export default function ProfilePage() {
           <label htmlFor="name" aria-disabled={true}>
             Name *
           </label>
-          <input type="text" name="name" value={name} />
+          <input type="text" name="name" value={currentUser.name} />
           <label htmlFor="email" aria-disabled={true}>
             Email *
           </label>
-          <input type="text" name="email" value={email} />
+          <input type="text" name="email" value={currentUser.email} />
           <Button type="submit"  >Logout</Button>
         </LoginForm>
       </div>
