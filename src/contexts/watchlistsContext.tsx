@@ -8,6 +8,7 @@ import {
 } from "react";
 import authFetch from "../utils/authFetch";
 import { API_URL } from "../utils/config";
+import { useAuth } from "./authContext";
 
 interface watchListItem {
   _id: string;
@@ -47,6 +48,7 @@ export default function WatchlistProvider({
 }) {
   const [watchLists, setWatchLists] = useState<watchListItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const { currentUser } = useAuth();
 
   async function getWatchLists() {
     try {
@@ -54,9 +56,9 @@ export default function WatchlistProvider({
       console.log("fetching...");
       const response = await authFetch(`${API_URL}/watchlists`);
       const data = await response.json();
-      console.log("fetched...:",data.data);
+      console.log("fetched...:", data.data);
       setWatchLists(data.data);
-      console.log('state updated')
+      console.log("state updated");
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message);
@@ -67,7 +69,7 @@ export default function WatchlistProvider({
   }
   useEffect(() => {
     getWatchLists();
-  }, []);
+  }, [currentUser]);
 
   const value: watchListContextType = {
     refetch: getWatchLists,
