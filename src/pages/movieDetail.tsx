@@ -6,6 +6,10 @@ import { RenderError } from "../components/Error";
 import { movie } from "../components/MovieList";
 import { useNavigate, useParams } from "react-router-dom";
 import { PrevButton } from "../components/PrevButton";
+import { useWatchlist } from "../contexts/watchlistsContext";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import authFetch from "../utils/authFetch";
+import { API_URL } from "../utils/config";
 
 interface movieDetail {
   imdbId: string;
@@ -52,6 +56,7 @@ export default function MovieDetail() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { currentMovie } = useParams();
+  const { watchLists } = useWatchlist();
 
   const movieDataUrl = `https://api.themoviedb.org/3/movie/${currentMovie}?language=en-US`;
   const similarMoviesUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/similar`;
@@ -158,6 +163,28 @@ export default function MovieDetail() {
   function HandleClickStream() {
     navigate(`/streammovie/${movie.imdbId}`);
   }
+  async function handleAddMovieToWatchlist(watchlistId: string) {
+    try {
+      const res = await authFetch(
+        `${API_URL}/watchlists/${watchlistId}/movies`,
+        {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            ...movie,
+            id:currentMovie,
+            poster: `https://image.tmdb.org/t/p/w500${movie.poster}`,
+          }),
+        }
+      );
+      const data = await res.json();
+      console.log(data);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  }
 
   return (
     <>
@@ -189,11 +216,45 @@ export default function MovieDetail() {
                 <h4 className="overview-title">Overview</h4>
                 <p>{movie.description}</p>
               </div>
-              <div className="flex buttons ">
+              <div style={{ position: "relative" }} className="flex buttons ">
                 <DetailBox title="Score" metric={movie.score} />
-                <Button className="movie-details-button">
-                  Add to watchlist
-                </Button>
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger asChild>
+                    <button className="movie-details-button">
+                      Add to watchlist
+                    </button>
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content className="movie-details-dropdown">
+                      {watchLists.map((watchlist) => (
+                        <DropdownMenu.Item
+                          key={watchlist._id}
+                          onClick={() =>
+                            handleAddMovieToWatchlist(watchlist._id)
+                          }
+                          style={{ padding: "10px", cursor: "pointer" }}
+                        >
+                          {watchlist.name}
+                        </DropdownMenu.Item>
+                      ))}
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                </DropdownMenu.Root>
+                {/* 
+                <div
+                  style={{
+                    position: "absolute",
+                    backgroundColor: "grey",
+                    padding: "10px",
+                    top: "70px",
+                    zIndex: 5,
+                    color: "white",
+                  }}
+                >
+                  {watchLists.map((watchlist) => (
+                    <p>{watchlist.name}</p>
+                  ))}
+                </div> */}
                 <Button
                   className="movie-details-button"
                   onClick={HandleClickStream}

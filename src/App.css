@@ -422,6 +422,15 @@ header svg {
 }
 .movie-details .movie-details-button {
   padding: 15px 20px;
+  color: #141414;
+  background-color: #f33f3f;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.movie-details-dropdown {
+  background-color: grey;
+  color: white;
 }
 .cast-container {
   margin: 2% 0;

@@ -11,18 +11,33 @@ const buttonStyle = {
 interface Button {
   className?: string;
   children: ReactNode;
-  onClick?:  (e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>) => void;
-  href?:any
-  disabled?:boolean
-  type?:"submit" | "reset" | "button"
+  onClick?: (
+    e: MouseEvent<HTMLButtonElement> | FormEvent<HTMLFormElement>
+  ) => void;
+  href?: any;
+  disabled?: boolean;
+  type?: "submit" | "reset" | "button";
 }
 
-export function Button({ children, className, onClick,href,disabled,type }: Button) {
+export function Button({
+  children,
+  className,
+  onClick,
+  href,
+  disabled,
+  type,
+}: Button) {
   return (
     <a href={href}>
-       <button className={className} style={buttonStyle} onClick={onClick} disabled={disabled} type={type!} >
-      <b>{children}</b>
-    </button>
-      </a>
+      <button
+        className={className}
+        style={buttonStyle}
+        onClick={onClick}
+        disabled={disabled}
+        type={type!}
+      >
+        <b>{children}</b>
+      </button>
+    </a>
   );
 }

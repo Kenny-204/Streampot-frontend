@@ -6,11 +6,10 @@ import { movie } from "../components/MovieList";
 
 interface Layout {
   children: ReactNode;
-  refetch:boolean;
   setQueriedMovies:Dispatch<SetStateAction<movie[]>>;
 }
 
-function Layout({ children,setQueriedMovies,refetch }: Layout) {
+function Layout({ children,setQueriedMovies }: Layout) {
   const [isNavOpen, setIsNavOpen] = useState(false);
   function toggleNav() {
     setIsNavOpen((isNavOpen) => !isNavOpen);
@@ -24,7 +23,7 @@ function Layout({ children,setQueriedMovies,refetch }: Layout) {
         {isNavOpen ? <Close onClick={()=>toggleNav()}/> : <Hamburger onClick={() => toggleNav()} />}
       </header>
       <div className="container flex">
-        <SideNav display={isNavOpen ? "" : "hidden"} refetch={refetch} setQueriedMovies={setQueriedMovies} />
+        <SideNav display={isNavOpen ? "" : "hidden"} setQueriedMovies={setQueriedMovies} />
         <Main
           onClick={() => {
             setIsNavOpen(false);

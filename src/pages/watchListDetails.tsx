@@ -40,8 +40,7 @@ function WatchListDetail() {
             description: data.data.description,
             items: data.data.movies,
           };
-          console.log(data);
-          console.log(newWatchlList);
+
           setCurrentWatchList(newWatchlList);
         } catch (error: unknown) {
           if (error instanceof Error) {
@@ -55,9 +54,7 @@ function WatchListDetail() {
     },
     [currentWatchlistId]
   );
-
-  console.log(currentWatchlist);
-  console.log(loading);
+  console.log(currentWatchlist)
   const totalRuntime = currentWatchlist.items
     ?.map((movie) => movie.runtime!)
     .reduce((a, b) => a + b, 0);

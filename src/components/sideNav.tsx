@@ -2,59 +2,22 @@ import { Button } from "./Button";
 import { NavLink, useNavigate } from "react-router-dom";
 import { HouseIcon, HistoryIcon, PlusIcon, Ellipsis } from "./Icons";
 import { useAuth } from "../contexts/authContext";
-import { API_URL } from "../utils/config";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Loader } from "./Loader";
 import { movie } from "./MovieList";
-import authFetch from "../utils/authFetch";
-
-interface watchListItem {
-  _id: number;
-  name: string;
-
-  description: string;
-  score?: number;
-  image?: string;
-}
+import { useWatchlist } from "../contexts/watchlistsContext";
 
 function SideNav({
   display,
-  refetch,
   setQueriedMovies,
 }: {
-  refetch: boolean;
   display?: string;
   setQueriedMovies: Dispatch<SetStateAction<movie[]>>;
 }) {
-  const [watchList, setWatchList] = useState<watchListItem[]>();
-  const [loading, setLoading] = useState(false);
-
+  const { watchLists, loading } = useWatchlist();
+  console.log("sidenav rendering:", watchLists);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
-  useEffect(
-    function () {
-      if (currentUser) {
-        async function getWatchList() {
-          try {
-            setLoading(true);
-            const response = await authFetch(`${API_URL}/watchlists`);
-            const data = await response.json();
-            setWatchList(data.data);
-          } catch (error: unknown) {
-            if (error instanceof Error) {
-              console.log(error.message);
-            }
-          } finally {
-            setLoading(false);
-          }
-        }
-        getWatchList();
-      } else {
-        setWatchList([]);
-      }
-    },
-    [currentUser, refetch]
-  );
 
   return (
     <nav className={`navbar ${display}`}>
@@ -115,7 +78,7 @@ function SideNav({
         {loading ? (
           <Loader width="30" />
         ) : (
-          watchList?.map((watchlistItem, i: number) => (
+          watchLists?.map((watchlistItem, i: number) => (
             <WatchListItem
               key={i}
               title={watchlistItem.name}
@@ -162,7 +125,7 @@ function SideNav({
 }
 
 interface watchListItemProps {
-  id: number;
+  id: string;
   image: string;
   title: string;
   // setCurrentWatchListId: Function;

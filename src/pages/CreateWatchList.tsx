@@ -1,17 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "../components/Button";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import {  FormEvent,  useState } from "react";
 import { API_URL } from "../utils/config";
 import { Loader } from "../components/Loader";
 import authFetch from "../utils/authFetch";
 import { RenderError } from "../components/Error";
+import { useWatchlist } from "../contexts/watchlistsContext";
 
-function CreateWatchList({
-  setRefetch,
-}: {
-  setRefetch: Dispatch<SetStateAction<boolean>>;
-}) {
-  // { setCurrentWatchListId }:{setCurrentWatchListId:Function}
+function CreateWatchList() {
   const [error, setError] = useState("");
 
   const [watchListName, setWatchlistName] = useState("");
@@ -19,7 +15,7 @@ function CreateWatchList({
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  // const { currentUser } = useAuth();
+  const { refetch } = useWatchlist();
 
   async function createWatchlist(e: FormEvent) {
     e.preventDefault();
@@ -41,7 +37,7 @@ function CreateWatchList({
       setLoading(false);
       console.log(data);
       if (data.status === "success") {
-        setRefetch((refetch) => !refetch);
+        refetch();
         navigate(`/watchlistdetail/${data.data._id}`);
       }
     } catch (error: unknown) {

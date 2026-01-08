@@ -17,17 +17,19 @@ import { movie } from "./components/MovieList";
 import ProfilePage from "./pages/profilePage";
 import StreamMovies from "./pages/streamMovies";
 import ProtectedRoute from "./contexts/protectedRoute";
+import WatchlistProvider from "./contexts/watchlistsContext";
 
 function App() {
   const [queriedMovies, setQueriedMovies] = useState<movie[]>([]);
-  const [refetch, setRefetch] = useState(false);
   const router = createBrowserRouter([
     {
       path: "/",
       element: (
-        <Layout refetch={refetch} setQueriedMovies={setQueriedMovies}>
-          <Outlet />
-        </Layout>
+        <WatchlistProvider>
+          <Layout setQueriedMovies={setQueriedMovies}>
+            <Outlet />
+          </Layout>
+        </WatchlistProvider>
       ),
       children: [
         {
@@ -43,13 +45,13 @@ function App() {
           path: "/",
           element: (
             <ProtectedRoute>
-              <Outlet />
+                <Outlet />
             </ProtectedRoute>
           ),
           children: [
             {
               path: "/createWatchlist",
-              element: <CreateWatchList setRefetch={setRefetch} />,
+              element: <CreateWatchList  />,
             },
             {
               path: "/editwatchlist",
