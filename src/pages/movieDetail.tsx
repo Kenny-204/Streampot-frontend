@@ -164,6 +164,7 @@ export default function MovieDetail() {
     navigate(`/streammovie/${movie.imdbId}`);
   }
   async function handleAddMovieToWatchlist(watchlistId: string) {
+    if(!watchlists) return 
     try {
       const res = await authFetch(
         `${API_URL}/watchlists/${watchlistId}/movies`,
