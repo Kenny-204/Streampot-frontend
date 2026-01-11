@@ -7,6 +7,7 @@ import { movie } from "../components/MovieList";
 import { useNavigate, useParams } from "react-router-dom";
 import { PrevButton } from "../components/PrevButton";
 import { useWatchlist } from "../contexts/watchlistsContext";
+import { useAuth } from "../contexts/AuthContext";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import authFetch from "../utils/authFetch";
 import { API_URL } from "../utils/config";
@@ -55,9 +56,11 @@ export default function MovieDetail() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const {currentUser} = useAuth()
   const { currentMovie } = useParams();
+  if(currentUser){
   const { watchLists } = useWatchlist();
-
+  }
   const movieDataUrl = `https://api.themoviedb.org/3/movie/${currentMovie}?language=en-US`;
   const similarMoviesUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/similar`;
   const creditsUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/credits`;
@@ -164,7 +167,6 @@ export default function MovieDetail() {
     navigate(`/streammovie/${movie.imdbId}`);
   }
   async function handleAddMovieToWatchlist(watchlistId: string) {
-    if(!watchlists) return 
     try {
       const res = await authFetch(
         `${API_URL}/watchlists/${watchlistId}/movies`,
