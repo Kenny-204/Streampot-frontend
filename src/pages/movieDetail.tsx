@@ -58,9 +58,8 @@ export default function MovieDetail() {
   const navigate = useNavigate();
   const {currentUser} = useAuth()
   const { currentMovie } = useParams();
-  if(currentUser){
   const { watchLists } = useWatchlist();
-  }
+  
   const movieDataUrl = `https://api.themoviedb.org/3/movie/${currentMovie}?language=en-US`;
   const similarMoviesUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/similar`;
   const creditsUrl = `https://api.themoviedb.org/3/movie/${currentMovie}/credits`;
