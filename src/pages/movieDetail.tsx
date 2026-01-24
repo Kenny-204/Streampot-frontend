@@ -7,7 +7,7 @@ import { movie } from "../components/MovieList";
 import { useNavigate, useParams } from "react-router-dom";
 import { PrevButton } from "../components/PrevButton";
 import { useWatchlist } from "../contexts/watchlistsContext";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/authContext";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import authFetch from "../utils/authFetch";
 import { API_URL } from "../utils/config";
