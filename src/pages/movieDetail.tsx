@@ -56,7 +56,7 @@ export default function MovieDetail() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const {currentUser} = useAuth()
+  // const {currentUser} = useAuth()
   const { currentMovie } = useParams();
   const { watchLists } = useWatchlist();
   
