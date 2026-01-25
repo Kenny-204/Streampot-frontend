@@ -19,7 +19,7 @@ interface authContextType {
     email: string,
     password: string,
     passwordConfirm: string,
-    name: string
+    name: string,
   ) => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
@@ -40,26 +40,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<user | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(function () {
-    async function fetchUser() {
-      const savedToken = localStorage.getItem("token") || "";
-      if (!savedToken) {
-        setLoading(false);
-        return;
-      }
-      setToken(savedToken);
-      const res = await fetch(`${API_URL}/users/me`, {
-        headers: { Authorization: `Bearer ${savedToken}` },
-      });
-      const data = await res.json();
-      const user = {
-        _id: data.data._id,
-        name: data.data.name,
-        email: data.data.email,
-      };
-      setCurrentUser(user);
+  async function fetchUser() {
+    const savedToken = localStorage.getItem("token") || "";
+    if (!savedToken) {
       setLoading(false);
+      return;
     }
+    setToken(savedToken);
+    const res = await fetch(`${API_URL}/users/me`, {
+      headers: { Authorization: `Bearer ${savedToken}` },
+    });
+    const data = await res.json();
+    const user = {
+      _id: data.data._id,
+      name: data.data.name,
+      email: data.data.email,
+    };
+    setCurrentUser(user);
+    setLoading(false);
+  }
+
+  useEffect(function () {
     fetchUser();
   }, []);
 
@@ -67,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     email: string,
     password: string,
     passwordConfirm: string,
-    name: string
+    name: string,
   ) {
     const response = await fetch(`${API_URL}/users/signup`, {
       method: "POST",
@@ -108,6 +109,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     console.log(data);
     localStorage.setItem("token", data.token);
     setToken(data.token);
+    fetchUser()
+    // setCurrentUser(newUser);
   }
   function logout() {
     localStorage.removeItem("token");
