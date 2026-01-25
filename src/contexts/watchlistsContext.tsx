@@ -27,7 +27,7 @@ interface watchListContextType {
 }
 
 const watchlistContext = createContext<watchListContextType | undefined>(
-  undefined
+  undefined,
 );
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -35,7 +35,7 @@ export function useWatchlist() {
   const context = useContext(watchlistContext);
   if (!context) {
     throw new Error(
-      "watchist context cannot be used outside watchlist provider"
+      "watchist context cannot be used outside watchlist provider",
     );
   }
   return context;
@@ -49,6 +49,16 @@ export default function WatchlistProvider({
   const [watchLists, setWatchLists] = useState<watchListItem[]>([]);
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth();
+
+  useEffect(
+    function () {
+      if (!currentUser) {
+        setWatchLists([]);
+        return;
+      }
+    },
+    [currentUser],
+  );
 
   async function getWatchLists() {
     try {
