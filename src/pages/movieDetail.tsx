@@ -105,7 +105,6 @@ export default function MovieDetail() {
           description: movieData.overview,
           genre: movieData.genres.map((genre: { name: string }) => genre.name),
         };
-        console.log(newMovie);
         setMovie(newMovie);
 
         // edit credits data

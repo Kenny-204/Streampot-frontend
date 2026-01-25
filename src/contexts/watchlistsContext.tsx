@@ -56,9 +56,7 @@ export default function WatchlistProvider({
       console.log("fetching...");
       const response = await authFetch(`${API_URL}/watchlists`);
       const data = await response.json();
-      console.log("fetched...:", data.data);
       setWatchLists(data.data);
-      console.log("state updated");
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error.message);
