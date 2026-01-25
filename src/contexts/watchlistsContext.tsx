@@ -50,15 +50,6 @@ export default function WatchlistProvider({
   const [loading, setLoading] = useState(true);
   const { currentUser } = useAuth();
 
-  useEffect(
-    function () {
-      if (!currentUser) {
-        setWatchLists([]);
-        return;
-      }
-    },
-    [currentUser],
-  );
 
   async function getWatchLists() {
     try {
@@ -78,6 +69,10 @@ export default function WatchlistProvider({
     }
   }
   useEffect(() => {
+    if (!currentUser) {
+      setWatchLists([]);
+      return;
+    }
     getWatchLists();
   }, [currentUser]);
 
