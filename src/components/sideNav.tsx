@@ -15,7 +15,7 @@ function SideNav({
   setQueriedMovies: Dispatch<SetStateAction<movie[]>>;
 }) {
   const { watchLists, loading } = useWatchlist();
-  console.log("sidenav rendering:", watchLists);
+  // console.log("sidenav rendering:", watchLists);
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 

@@ -42,7 +42,7 @@ function HomePage({ setQueriedMovies, queriedMovies }: HomepageProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  console.log(JSON.parse(localStorage.getItem("queriedMovies") || "[]"));
+  // console.log(JSON.parse(localStorage.getItem("queriedMovies") || "[]"));
 
   useEffect(() => {
     async function getPopularMoviesList() {
@@ -66,7 +66,7 @@ function HomePage({ setQueriedMovies, queriedMovies }: HomepageProps) {
           score: Math.round(movie.vote_average * 10),
         }));
 
-        console.log(data.results);
+        // console.log(data.results);
         setPopularMoviesList(editData);
       } catch (error: any) {
         console.log("Failed to fetch popular movies:");
