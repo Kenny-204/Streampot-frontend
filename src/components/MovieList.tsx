@@ -22,7 +22,7 @@ export function MovieList({ children, list }: movieList) {
   return (
     <div className="movie-list">
       {children}
-      <ul className="flex movies">
+      <ul className="movies">
         {list.map((movie, i) => (
           <Movie movie={movie} key={i} />
         ))}
@@ -46,11 +46,12 @@ function Movie({ movie }: { movie: movie }) {
     <li className="flex movie" onClick={handleSetCurrentMovie}>
       <BookMarkIcon />
       <img src={movie.poster} alt={movie.title} width="100%" height="225px" />
-      <div className="movie-details">
-        <p className="movie-rating">{movie.score}/100</p>
-        <p className="movie-title">
-          {movie.title} ({movie.year})
-        </p>
+      <div className="movie-card-info">
+        <p className="movie-card-title">{movie.title}</p>
+        <div className="movie-card-meta">
+          <span className="movie-card-year">{movie.year}</span>
+          <span className="movie-card-score">{movie.score}/100</span>
+        </div>
       </div>
     </li>
   );

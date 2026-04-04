@@ -195,14 +195,16 @@ export default function MovieDetail() {
         <RenderError message={error} />
       ) : (
         <div>
-          <PrevButton />
           <div className="movie-details-container flex">
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
-              alt={movie.title}
-              width="250px"
-              height="350px"
-            />
+            <div style={{ position: "relative", width: "250px", flexShrink: 0 }}>
+              <PrevButton />
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movie.poster}`}
+                alt={movie.title}
+                width="250px"
+                height="350px"
+              />
+            </div>
 
             <div className="movie-details flex">
               <div>
@@ -278,7 +280,6 @@ export default function MovieDetail() {
               ))}
             </div>
           </div>
-          <button>back</button>
           {/* <MovieList list={similarMovies}>
             <h5>Related Movies</h5>
           </MovieList> */}

@@ -68,9 +68,12 @@ function HomePage({ setQueriedMovies, queriedMovies }: HomepageProps) {
 
         // console.log(data.results);
         setPopularMoviesList(editData);
-      } catch (error: any) {
-        console.log("Failed to fetch popular movies:");
-        setError(error.message);
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          setError(error.message);
+        } else {
+          console.log(error);
+        }
       } finally {
         setLoading(false);
       }

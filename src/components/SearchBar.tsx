@@ -70,9 +70,12 @@ export function SearchBar({
       // localStorage.setItem('queriedMovies',JSON.stringify(editData))
       setQueriedMovies(editData);
       console.log(editData);
-    } catch (e: any) {
-      console.error(e.message);
-      setError(e.message);
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        console.log(e);
+      }
     } finally {
       setLoading(false);
     }
