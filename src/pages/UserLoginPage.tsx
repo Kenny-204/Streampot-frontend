@@ -29,9 +29,12 @@ function UserLoginPage() {
       await login(email, password);
       console.log(currentUser);
       navigate("/");
-    } catch (error: any) {
-      console.log(error);
-      setError(error.message);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        console.log(error);
+      }
     } finally {
       setLoading(false);
     }
@@ -40,11 +43,11 @@ function UserLoginPage() {
   return (
     <>
       <div className="login-container">
-        <LoginHeading />
         <div>
           {error && <RenderError message={error} />}
           {loading && <Loader width="30" />}
           <LoginForm onSubmit={(e) => handleUserLogin(e, email, password)}>
+            <LoginHeading />
             <label htmlFor="email">Email *</label>
             <input
               type="text"
@@ -54,7 +57,7 @@ function UserLoginPage() {
             />
             <label htmlFor="password">Password*</label>
             <input
-              type="text"
+              type="password"
               name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -74,16 +77,11 @@ function UserLoginPage() {
   );
 }
 
-export function LoginHeading() {
+export function LoginHeading({ sub = "Sign in to your account" }: { sub?: string }) {
   return (
     <div className="login-heading">
-      <p>
-        Hello!
-        <br />
-        Please log in or create an account
-        <br />
-        to use the features of this app
-      </p>
+      <p className="login-brand">Streampot</p>
+      <p className="login-sub">{sub}</p>
     </div>
   );
 }

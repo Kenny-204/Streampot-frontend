@@ -40,25 +40,23 @@ function UserSignUp() {
   }
 
   return (
-    <>
-      <LoginHeading />
+    <div className="login-container">
       <div>
-        <div
-          style={{
-            placeItems: "center",
-            display: "flex",
-            flexDirection: "column",
-          }}
-        >
-          <img src="user2.png" alt="user-pic" width="100px" />
-          <p>
-            <span className="fa fa-camera"></span> Add an avatar
-          </p>
+        <LoginForm onSubmit={(e) => handleUserSignup(e, email, password, name)}>
+          <LoginHeading sub="Create your account" />
+          <div
+            style={{
+              placeItems: "center",
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "8px",
+            }}
+          >
+            <img src="user2.png" alt="user-pic" width="80px" style={{ borderRadius: "50%" }} />
+            <p style={{ fontSize: "12px", color: "#9a9a9a", marginTop: "6px" }}>Add an avatar</p>
+          </div>
           {error && <RenderError message={error} />}
           {loading && <Loader width="30" />}
-        </div>
-
-        <LoginForm onSubmit={(e) => handleUserSignup(e, email, password, name)}>
           <label htmlFor="name">Name *</label>
           <input
             type="text"
@@ -75,14 +73,14 @@ function UserSignUp() {
           />
           <label htmlFor="password">Password*</label>
           <input
-            type="text"
+            type="password"
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <label htmlFor="password">Confirm Password*</label>
           <input
-            type="text"
+            type="password"
             name="passwordConfirm"
             value={passwordConfirm}
             onChange={(e) => setPasswordConfirm(e.target.value)}
@@ -95,7 +93,7 @@ function UserSignUp() {
           </p>
         </LoginForm>
       </div>
-    </>
+    </div>
   );
 }
 

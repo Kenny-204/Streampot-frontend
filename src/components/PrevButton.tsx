@@ -1,18 +1,30 @@
 import { useNavigate } from "react-router-dom";
+import { ChevronLeftIcon } from "./Icons";
 
-const buttonStyle = {
-  color: "red",
-  fontSize: "40px",
-  backgroundColor: "transparent",
-  border: "none",
-};
 export function PrevButton() {
-const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-    <button style={buttonStyle}  onClick={() => {
-      navigate(-1);
-    }} >
-      <span className="fa fa-angle-left"> </span>
+    <button
+      style={{
+        position: "absolute",
+        top: "10px",
+        left: "10px",
+        zIndex: 2,
+        color: "#f33f3f",
+        backgroundColor: "rgba(0,0,0,0.55)",
+        border: "none",
+        borderRadius: "50%",
+        width: "36px",
+        height: "36px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        cursor: "pointer",
+        fontSize: "16px",
+      }}
+      onClick={() => navigate(-1)}
+    >
+      <ChevronLeftIcon />
     </button>
   );
 }
